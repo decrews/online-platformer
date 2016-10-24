@@ -49,7 +49,7 @@ public:
 	float width = 0;
 	float height = 0;
 	float speed = 0.005;
-	float jumpHeight = 0.01;
+	float jumpHeight = 0.015;
 	float xPos = 0;
 	float yPos = 0;
 	float xVel = 0;

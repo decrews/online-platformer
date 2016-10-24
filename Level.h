@@ -20,6 +20,6 @@ public:
 
 	std::vector<Platform*> blocks;
 	float levelPos = 0;
-	float gravity = 0.00001;
+	float gravity = 0.0005;
 };
 

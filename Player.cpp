@@ -43,22 +43,24 @@ void Player:: Update(long elapsed_microseconds) {
 	}
 
 	if (w_down) {
+		/*
 		if (jumpTime) {
 			yVel = jumpHeight;
 		}
+		*/
 		if (grounded) {
 			yVel = jumpHeight;
-			jumpTime = true;
+			//jumpTime = true;
 		}
 	}
 
 	if (grounded == false) {
-		yVel -= currentLevel->gravity;
+		yVel -= currentLevel->gravity * dt;
 	}
-
+	/*
 	if (jumpTime == true) {
 		if (jumpWindow < jumpMax) {
-			yVel -= currentLevel->gravity;
+			yVel -= currentLevel->gravity * dt;
 			jumpWindow++;
 		}
 		else {
@@ -66,7 +68,7 @@ void Player:: Update(long elapsed_microseconds) {
 			jumpTime = false;
 		}
 	}
-
+	*/
 	// Move Player
 	yPos += yVel  * dt;
 	currentLevel->levelPos -= xVel  * dt;
