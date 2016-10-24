@@ -588,6 +588,9 @@ void OnKeyDown(HWND hwnd, UINT vk, BOOL fDown, int cRepeat, UINT flags)
 {
 	switch (vk)
 	{
+	case 27: //esc
+		PostQuitMessage(0);
+		break;
 	case 65: //a
 		player->a_down = true;
 		break;
