@@ -649,7 +649,7 @@ void InitGame() {
 
 	// Blocks
 	currentLevel->blocks.push_back(new Platform(-0.3, -0.7, 0.05, g_stoneBlockTex));
-	currentLevel->blocks.push_back(new Platform(0, -0.7, 0.05, g_stoneBlockTex));
+	currentLevel->blocks.push_back(new Platform(0.0, -0.7, 0.05, g_stoneBlockTex));
 	currentLevel->blocks.push_back(new Platform(0.1, -0.7, 0.05, g_stoneBlockTex));
 	currentLevel->blocks.push_back(new Platform(0.2, -0.7, 0.05, g_stoneBlockTex));
 	currentLevel->blocks.push_back(new Platform(0.3, -0.7, 0.05, g_stoneBlockTex));
@@ -665,6 +665,9 @@ void InitGame() {
 
 	currentLevel->blocks.push_back(new Platform(1.4, -0.5, 0.05, g_stoneBlockTex));
 	currentLevel->blocks.push_back(new Platform(1.5, -0.5, 0.05, g_stoneBlockTex));
+
+	currentLevel->blocks.push_back(new Platform(1.7, -0.3, 0.05, g_blockTex));
+	currentLevel->blocks.push_back(new Platform(1.8, -0.3, 0.05, g_blockTex));
 
 }
 
