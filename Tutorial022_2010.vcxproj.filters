@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="Game.cpp">
+      <Filter>cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="Level.cpp">
+      <Filter>cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="Platform.cpp">
+      <Filter>cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="Rect.cpp">
+      <Filter>cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="source.cpp">
+      <Filter>cpp</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="STRUCTS.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+    <CLInclude Include="resource.h">
+      <Filter>headers</Filter>
+    </CLInclude>
+    <ClInclude Include="Rect.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Platform.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Level.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+    <ClInclude Include="groundwork.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="homework2.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="cpp">
+      <UniqueIdentifier>{d189a258-78a5-4f44-9f62-38930555fa37}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="headers">
+      <UniqueIdentifier>{7458a7ce-4302-4341-817e-b8f25cba9567}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="shaders">
+      <UniqueIdentifier>{ad1d35f9-1f19-478f-8857-65d68665af71}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="shader.fx">
+      <Filter>shaders</Filter>
+    </None>
+  </ItemGroup>
+</Project>
