@@ -20,6 +20,19 @@ bool Player::groundCheck(Rect* rect) {
 }
 
 
+bool Player::wallCheck(Rect* rect) {
+	if (this->rect->collides(rect)) {
+		float diff = sqrt((xPos - rect->x - (rect->width / 2))*(xPos - rect->x - (rect->width / 2)));
+		if (diff < rect->width) {
+			return true;
+		}
+		else {
+			return false;
+		}
+		return false;
+	}
+}
+
 
 void Player::update(long elapsed_microseconds) {
 	// Time since last frame, always multiply by this
@@ -43,32 +56,16 @@ void Player::update(long elapsed_microseconds) {
 	}
 
 	if (w_down) {
-		/*
-		if (jumpTime) {
-			yVel = jumpHeight;
-		}
-		*/
 		if (grounded) {
 			yVel = jumpHeight;
-			//jumpTime = true;
 		}
 	}
 
 	if (grounded == false) {
 		yVel -= currentLevel->gravity * dt;
 	}
-	/*
-	if (jumpTime == true) {
-		if (jumpWindow < jumpMax) {
-			yVel -= currentLevel->gravity * dt;
-			jumpWindow++;
-		}
-		else {
-			jumpWindow = 0;
-			jumpTime = false;
-		}
-	}
-	*/
+	
+
 	// Move Player
 	yPos += yVel  * dt;
 	currentLevel->levelPos -= xVel  * dt;
@@ -77,6 +74,19 @@ void Player::update(long elapsed_microseconds) {
 	// Update level blocks and check collision
 	grounded = false;
 	for (Platform* block : currentLevel->blocks) {
+
+		// Constantly shifts the player to the left, off the platforms
+		/*
+		if (wallCheck(block->rect))
+		{
+
+			xPos = block->rect->x - block->rect->width / 1.6;
+			rect->x = block->rect->x - block->rect->width / 1.6;
+			block->xPos = xPos + (block->rect->width) / 1.6;
+			block->rect->x = xPos + block->rect->width / 1.6;
+		}
+		*/
+
 		block->xPos -= xVel  * dt;
 		block->rect->x -= xVel  * dt;
 

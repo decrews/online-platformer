@@ -8,6 +8,7 @@ class Player
 public:
 	Player(Level* cLevel);
 	bool groundCheck(Rect* rect);
+	bool wallCheck(Rect* rect);
 	void update(long elapsed_microseconds);
 	void draw(VS_CONSTANT_BUFFER* cbuffer, ID3D11DeviceContext* gcontext,
 		ID3D11VertexShader* vs, ID3D11PixelShader* ps,
