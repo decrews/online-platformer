@@ -8,8 +8,8 @@ class Player
 public:
 	Player(Level* cLevel);
 	bool groundCheck(Rect* rect);
-	void Update(long elapsed_microseconds);
-	void Draw(VS_CONSTANT_BUFFER* cbuffer, ID3D11DeviceContext* gcontext,
+	void update(long elapsed_microseconds);
+	void draw(VS_CONSTANT_BUFFER* cbuffer, ID3D11DeviceContext* gcontext,
 		ID3D11VertexShader* vs, ID3D11PixelShader* ps,
 		ID3D11Buffer* constBuffer, ID3D11SamplerState* sampler,
 		ID3D11Buffer* vb, UINT stride, UINT offset

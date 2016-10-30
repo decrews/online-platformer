@@ -7,7 +7,7 @@ Level::Level() {
 
 
 
-void Level::Draw(VS_CONSTANT_BUFFER* cbuffer, ID3D11DeviceContext* gcontext,
+void Level::draw(VS_CONSTANT_BUFFER* cbuffer, ID3D11DeviceContext* gcontext,
 	ID3D11VertexShader* vs, ID3D11PixelShader* ps,
 	ID3D11Buffer* constBuffer, ID3D11SamplerState* sampler,
 	ID3D11Buffer* vb, UINT stride, UINT offset) {
@@ -74,7 +74,7 @@ void Level::Draw(VS_CONSTANT_BUFFER* cbuffer, ID3D11DeviceContext* gcontext,
 
 
 
-void Level::Update(long elapsed_microseconds) {
+void Level::update(long elapsed_microseconds) {
 	// Put level activity here.  Moving platforms, enemies, etc.
 }
 

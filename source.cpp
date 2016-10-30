@@ -684,8 +684,8 @@ void Render()
 	long elapsed = stopwatch.elapse_micro();
 	stopwatch.start(); //restart
 
-	currentLevel->Update(elapsed);
-	player->Update(elapsed);
+	currentLevel->update(elapsed);
+	player->update(elapsed);
 
 	// Setup vertex buffer parameters
 	UINT stride = sizeof(SimpleVertex);
@@ -696,11 +696,11 @@ void Render()
 	g_pImmediateContext->ClearRenderTargetView(g_pRenderTargetView, ClearColor);
 
 	// Draw the current level
-	currentLevel->Draw(VsConstData, g_pImmediateContext, g_pVertexShader, g_pPixelShader,
+	currentLevel->draw(VsConstData, g_pImmediateContext, g_pVertexShader, g_pPixelShader,
 		g_pConstantBuffer11, g_Sampler, g_pVertexBuffer2, stride, offset);
 
 	// Draw the player
-	player->Draw(VsConstData, g_pImmediateContext, g_pVertexShader, g_pPixelShader,
+	player->draw(VsConstData, g_pImmediateContext, g_pVertexShader, g_pPixelShader,
 		g_pConstantBuffer11, g_Sampler, g_pVertexBuffer, stride, offset);
 
 	// Present the information rendered to the back buffer to the front buffer (the screen)

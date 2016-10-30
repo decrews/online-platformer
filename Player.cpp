@@ -8,7 +8,7 @@ Player::Player(Level* cLevel) {
 
 
 bool Player::groundCheck(Rect* rect) {
-	if (this->rect->Collides(rect)) {
+	if (this->rect->collides(rect)) {
 		if (yPos - (height / 2) < rect->y + (rect->height / 2)) {
 			return false;
 		}
@@ -21,7 +21,7 @@ bool Player::groundCheck(Rect* rect) {
 
 
 
-void Player:: Update(long elapsed_microseconds) {
+void Player::update(long elapsed_microseconds) {
 	// Time since last frame, always multiply by this
 	// when moving the player
 	float dt = elapsed_microseconds / 10000.0;
@@ -93,7 +93,7 @@ void Player:: Update(long elapsed_microseconds) {
 
 
 
-void Player::Draw(VS_CONSTANT_BUFFER* cbuffer, ID3D11DeviceContext* gcontext,
+void Player::draw(VS_CONSTANT_BUFFER* cbuffer, ID3D11DeviceContext* gcontext,
 	ID3D11VertexShader* vs, ID3D11PixelShader* ps,
 	ID3D11Buffer* constBuffer, ID3D11SamplerState* sampler,
 	ID3D11Buffer* vb, UINT stride, UINT offset) {
