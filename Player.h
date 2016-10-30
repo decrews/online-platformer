@@ -9,6 +9,7 @@ public:
 	Player(Level* cLevel);
 	bool groundCheck(Rect* rect);
 	bool wallCheck(Rect* rect);
+	void movePlayer(float x, float y);
 	void update(long elapsed_microseconds);
 	void draw(VS_CONSTANT_BUFFER* cbuffer, ID3D11DeviceContext* gcontext,
 		ID3D11VertexShader* vs, ID3D11PixelShader* ps,
@@ -44,6 +45,7 @@ public:
 
 	// Player attributes 
 	bool grounded = false;
+	bool againstWall = false;
 	bool jumpTime = false;
 	int jumpWindow = 0;
 	int jumpMax = 500; // The amount of time you can increase jump height
@@ -51,8 +53,12 @@ public:
 	float height = 0;
 	float speed = 0.005;
 	float jumpHeight = 0.015;
+	
 	float xPos = 0;
 	float yPos = 0;
+
+	float xVelPrev = 0;
+
 	float xVel = 0;
 	float yVel = 0;
 	Rect* rect = new Rect(adjustedWidth, adjustedHeight, xPos, yPos);

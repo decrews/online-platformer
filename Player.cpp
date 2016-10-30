@@ -33,6 +33,9 @@ bool Player::wallCheck(Rect* rect) {
 	}
 }
 
+void Player::movePlayer(float x, float y) {
+}
+
 
 void Player::update(long elapsed_microseconds) {
 	// Time since last frame, always multiply by this
@@ -68,37 +71,53 @@ void Player::update(long elapsed_microseconds) {
 
 	// Move Player
 	yPos += yVel  * dt;
-	currentLevel->levelPos -= xVel  * dt;
 	rect->y += yVel  * dt;
+	currentLevel->levelPos -= xVel  * dt;
 
 	// Update level blocks and check collision
 	grounded = false;
+	againstWall = false;
+
 	for (Platform* block : currentLevel->blocks) {
 
-		// Constantly shifts the player to the left, off the platforms
-		/*
-		if (wallCheck(block->rect))
-		{
-
-			xPos = block->rect->x - block->rect->width / 1.6;
-			rect->x = block->rect->x - block->rect->width / 1.6;
-			block->xPos = xPos + (block->rect->width) / 1.6;
-			block->rect->x = xPos + block->rect->width / 1.6;
-		}
-		*/
-
-		block->xPos -= xVel  * dt;
-		block->rect->x -= xVel  * dt;
-
+		// Checks to see if there is a collision with the ground.
+		// if so, move the player up to the "ground" level
 		if (groundCheck(block->rect)) {
 			grounded = true;
 			yVel = 0;
 			yPos = block->rect->y + height/2 + block->rect->height/1.6;
 			rect->y = block->rect->y + height/2 + block->rect->height/1.6;
-			OutputDebugStringW(L"Collision with Platform happened.\n");
+		}
+
+		// Checks every block to see if the player is against it.
+		// If so, flag it so that the wall updates are handled correctly.
+		if (wallCheck(block->rect)) {
+			againstWall = true;
+			OutputDebugStringW(L"Wall collision triggered.\n");
 		}
 	}
 
+	// If the player is not against the wall, move the platforms
+	// and save this "move" in xVelPrev in case we have to move 
+	// it back next frame.
+	if (againstWall == false) {
+		for (Platform* block : currentLevel->blocks) {
+			block->xPos -= xVel  * dt;
+			block->rect->x -= xVel  * dt;
+		}
+
+		xVelPrev = xVel * dt;
+	}
+
+	// Wall collision happened this frame!  Undo to the previous move
+	// by subtracting the previous velocity to restore the previous platform
+	// position.
+	else {
+		for (Platform* block : currentLevel->blocks) {
+			block->xPos += xVelPrev;
+			block->rect->x += xVelPrev;
+		}
+	}
 }
 
 
