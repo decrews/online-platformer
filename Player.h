@@ -46,18 +46,21 @@ public:
 	// Player attributes 
 	bool grounded = false;
 	bool againstWall = false;
+	bool hitGround = false;
+
 	bool jumpTime = false;
 	int jumpWindow = 0;
 	int jumpMax = 500; // The amount of time you can increase jump height
 	float width = 0;
 	float height = 0;
-	float speed = 0.005;
-	float jumpHeight = 0.015;
+	float speed = 0.007;
+	float jumpHeight = 0.018;
 	
 	float xPos = 0;
-	float yPos = 0;
+	float yPos = -0.4;
 
 	float xVelPrev = 0;
+	float yPosPrev = 0;
 
 	float xVel = 0;
 	float yVel = 0;

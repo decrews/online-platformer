@@ -1,7 +1,9 @@
 #include "Platform.h"
 
 
-Platform::Platform(float x, float y, float s, ID3D11ShaderResourceView* t) {
+Platform::Platform(float x, float y, float s, ID3D11ShaderResourceView* t, int tp) {
+	type = tp;
+
 	height = 4 * s;
 	width = 4 * s;
 

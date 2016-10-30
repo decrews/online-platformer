@@ -57,13 +57,11 @@ void Player::update(long elapsed_microseconds) {
 		animationActive = false;
 		xVel = 0;
 	}
-
 	if (w_down) {
 		if (grounded) {
 			yVel = jumpHeight;
 		}
 	}
-
 	if (grounded == false) {
 		yVel -= currentLevel->gravity * dt;
 	}
@@ -72,21 +70,31 @@ void Player::update(long elapsed_microseconds) {
 	// Move Player
 	yPos += yVel  * dt;
 	rect->y += yVel  * dt;
-	currentLevel->levelPos -= xVel  * dt;
+	currentLevel->levelPosChange = xVel  * dt;
 
 	// Update level blocks and check collision
 	grounded = false;
 	againstWall = false;
+	hitGround = false;
 
 	for (Platform* block : currentLevel->blocks) {
 
 		// Checks to see if there is a collision with the ground.
-		// if so, move the player up to the "ground" level
 		if (groundCheck(block->rect)) {
+			hitGround = true;
 			grounded = true;
-			yVel = 0;
-			yPos = block->rect->y + height/2 + block->rect->height/1.6;
-			rect->y = block->rect->y + height/2 + block->rect->height/1.6;
+
+			// If the block is a falling block (type 1), set the falling flag.
+			if (block->type == 1) {
+				block->falling = true;
+			}
+		}
+
+		// If ground collision did happen (hitGround), then undo the move (-yVel)
+		if (hitGround == true) {
+			yPos -= yVel  * dt;
+			rect->y -= yVel  * dt;
+			yVel = yVel / 3;
 		}
 
 		// Checks every block to see if the player is against it.
@@ -102,21 +110,21 @@ void Player::update(long elapsed_microseconds) {
 	// it back next frame.
 	if (againstWall == false) {
 		for (Platform* block : currentLevel->blocks) {
-			block->xPos -= xVel  * dt;
-			block->rect->x -= xVel  * dt;
+			currentLevel->levelPosChange = xVel  * dt;
 		}
 
-		xVelPrev = xVel * dt;
+		xVelPrev = xVel  * dt;
 	}
 
 	// Wall collision happened this frame!  Undo to the previous move
 	// by subtracting the previous velocity to restore the previous platform
 	// position.
 	else {
-		for (Platform* block : currentLevel->blocks) {
-			block->xPos += xVelPrev;
-			block->rect->x += xVelPrev;
-		}
+		currentLevel->levelPosChange = -xVelPrev;
+	}
+
+	if (yPos <= -1.5) {
+		PostQuitMessage(0);
 	}
 }
 

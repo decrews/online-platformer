@@ -19,7 +19,8 @@ public:
 	ID3D11ShaderResourceView* bgTex; // Background Texture
 
 	std::vector<Platform*> blocks;
-	float levelPos = 0;
+	std::vector<Platform*> fallingBlocks;
+	float levelPosChange = 0;
 	float gravity = 0.0005;
 };
 
