@@ -8,5 +8,5 @@ struct VS_CONSTANT_BUFFER
 	float x;
 	float y;
 	float scale;
-	float some_variable_h;
+	float extra;
 };

@@ -10,8 +10,8 @@ Player::Player(Level* cLevel) {
 bool Player::groundCheck(Rect* rect) {
 	if (this->rect->collides(rect)) {
 		if (this->rect->y > rect->y + (rect->height / 2)
-			&& this->rect->x - (this->rect->width / 500) > rect->x - (rect->width / 2)
-			&& this->rect->x + (this->rect->width / 500) < rect->x + (rect->width / 2)) {
+			&& this->rect->x - (this->rect->width / 300) > rect->x - (rect->width / 2)
+			&& this->rect->x + (this->rect->width / 300) < rect->x + (rect->width / 2)) {
 			OutputDebugString(L"Testing\n");
 			return true;
 		}
@@ -94,7 +94,7 @@ void Player::update(long elapsed_microseconds) {
 		}
 
 		// If ground collision did happen (hitGround), then undo the move (-yVel)
-		if (hitGround == true) {
+		else if (hitGround == true) {
 			yPos -= yVel  * dt;
 			rect->y -= yVel  * dt;
 			yVel = 0;
@@ -104,11 +104,10 @@ void Player::update(long elapsed_microseconds) {
 		// If so, flag it so that the wall updates are handled correctly.
 		if (wallCheck(block->rect)) {
 			againstWall = true;
-			OutputDebugStringW(L"Wall collision triggered.\n");
 		}
 	}
 
-	// Smooth out walking on falling blocks.
+	// Smooths out walking on falling blocks.
 	if (hitGround == true) {
 		yPos += 0.003;
 		rect->y += 0.003;

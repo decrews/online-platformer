@@ -61,5 +61,8 @@ float4 PS(PS_INPUT input) : SV_Target
 {
 	float2 texture_coordinates = input.Tex;
 	float4 color = txDiffuse.Sample(samLinear, texture_coordinates);
+	if (cb_h == 1) {
+		color = float4(1, 0, 0, 1);
+	}
 	return color;
 }

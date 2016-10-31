@@ -383,7 +383,7 @@ HRESULT InitDevice()
 
     // Set primitive topology
     g_pImmediateContext->IASetPrimitiveTopology( D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST );
-
+	
 
 	// Supply the vertex shader constant data.
 	VsConstData->currentFrameColumn = 0;
@@ -393,8 +393,8 @@ HRESULT InitDevice()
 	VsConstData->x = 0;
 	VsConstData->y = 0;
 	VsConstData->scale = 0;
-	VsConstData->some_variable_h = 0;
-	
+	VsConstData->extra = 0; // currently used as a toggle for textures.
+
 	// Fill in a buffer description.
 	D3D11_BUFFER_DESC cbDesc;
 	ZeroMemory(&cbDesc, sizeof(cbDesc));
@@ -579,6 +579,13 @@ void OnKeyUp(HWND hwnd, UINT vk, BOOL fDown, int cRepeat, UINT flags)
 	case 32: //space
 		player->w_down = false;
 		break;
+	case 75: // k
+		if (VsConstData->extra == 1) {
+			VsConstData->extra = 0;
+		}
+		else {
+			VsConstData->extra = 1;
+		}
 	default:
 		break;
 	}
@@ -652,7 +659,14 @@ void InitGame() {
 	// The last argument determines block type
 	// 0 = normal block
 	// 1 = falling block (speed constant in Level class)
-	currentLevel->blocks.push_back(new Platform(-0.3, -0.7, 0.05, g_stoneBlockTex, 0));
+	currentLevel->blocks.push_back(new Platform(-0.1, 0, 0.05, g_stoneBlockTex, 0));
+	currentLevel->blocks.push_back(new Platform(-0.1, -0.1, 0.05, g_stoneBlockTex, 0));
+	currentLevel->blocks.push_back(new Platform(-0.1, -0.2, 0.05, g_stoneBlockTex, 0));
+	currentLevel->blocks.push_back(new Platform(-0.1, -0.3, 0.05, g_stoneBlockTex, 0));
+	currentLevel->blocks.push_back(new Platform(-0.1, -0.4, 0.05, g_stoneBlockTex, 0));
+	currentLevel->blocks.push_back(new Platform(-0.1, -0.5, 0.05, g_stoneBlockTex, 0));
+	currentLevel->blocks.push_back(new Platform(-0.1, -0.6, 0.05, g_stoneBlockTex, 0));
+	currentLevel->blocks.push_back(new Platform(-0.1, -0.7, 0.05, g_stoneBlockTex, 0));
 	currentLevel->blocks.push_back(new Platform(0.0, -0.7, 0.05, g_stoneBlockTex, 0));
 	currentLevel->blocks.push_back(new Platform(0.1, -0.7, 0.05, g_stoneBlockTex, 0));
 	currentLevel->blocks.push_back(new Platform(0.2, -0.7, 0.05, g_stoneBlockTex, 0));
@@ -681,7 +695,6 @@ void InitGame() {
 	currentLevel->blocks.push_back(new Platform(2.3, -0.2, 0.05, g_stoneBlockTex, 0));
 	currentLevel->blocks.push_back(new Platform(2.3, -0.1, 0.05, g_stoneBlockTex, 0));
 	currentLevel->blocks.push_back(new Platform(2.3, 0, 0.05, g_stoneBlockTex, 0));
-	currentLevel->blocks.push_back(new Platform(2.3, 0.3, 0.05, g_stoneBlockTex, 0));
 
 	currentLevel->blocks.push_back(new Platform(2.4, -0.3, 0.05, g_blockTex, 1));
 	currentLevel->blocks.push_back(new Platform(2.5, -0.3, 0.05, g_blockTex, 1));
@@ -691,6 +704,15 @@ void InitGame() {
 	currentLevel->blocks.push_back(new Platform(3.0, -0.2, 0.05, g_stoneBlockTex, 0));
 	currentLevel->blocks.push_back(new Platform(3.1, -0.2, 0.05, g_stoneBlockTex, 0));
 	currentLevel->blocks.push_back(new Platform(3.2, -0.2, 0.05, g_stoneBlockTex, 0));
+	currentLevel->blocks.push_back(new Platform(3.3, -0.2, 0.05, g_stoneBlockTex, 0));
+	currentLevel->blocks.push_back(new Platform(3.4, -0.2, 0.05, g_stoneBlockTex, 0));
+	currentLevel->blocks.push_back(new Platform(3.5, -0.2, 0.05, g_stoneBlockTex, 0));
+	currentLevel->blocks.push_back(new Platform(3.6, -0.2, 0.05, g_stoneBlockTex, 0));
+	currentLevel->blocks.push_back(new Platform(3.7, -0.2, 0.05, g_stoneBlockTex, 0));
+	currentLevel->blocks.push_back(new Platform(3.8, -0.2, 0.05, g_stoneBlockTex, 0));
+	currentLevel->blocks.push_back(new Platform(3.9, -0.2, 0.05, g_stoneBlockTex, 0));
+	currentLevel->blocks.push_back(new Platform(4.0, -0.2, 0.05, g_stoneBlockTex, 0));
+	currentLevel->blocks.push_back(new Platform(4.1, -0.2, 0.05, g_stoneBlockTex, 0));
 
 }
 
