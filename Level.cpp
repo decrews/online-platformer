@@ -76,13 +76,17 @@ void Level::draw(VS_CONSTANT_BUFFER* cbuffer, ID3D11DeviceContext* gcontext,
 
 void Level::update(long elapsed_microseconds) {
 	// Put level activity here.  Moving platforms, enemies, etc.
+	float dt = elapsed_microseconds / 10000.0;
+
 	for (auto block : blocks) {
 		block->xPos -= levelPosChange;
 		block->rect->x -= levelPosChange;
 
 		if (block->falling == true) {
-			block->yPos -= 0.0001;
-			block->rect->y -= 0.0001;
+			block->yVel += block->fallingSpeed;
+
+			block->yPos -= block->yVel * dt;
+			block->rect->y -= block->yVel * dt;
 		}
 	}
 	

@@ -9,10 +9,14 @@ public:
 	~Platform();
 
 	bool falling = false;
-	float fallingSpeed = 0.0001;
+	float fallingSpeed = 0.0000012;
 	int type;
+	
 	float xPos;
 	float yPos;
+	float xVel = 0;
+	float yVel = 0;
+
 	float height;
 	float width;
 	float scale;

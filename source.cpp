@@ -576,7 +576,6 @@ void OnKeyUp(HWND hwnd, UINT vk, BOOL fDown, int cRepeat, UINT flags)
 	case 87: //w
 		player->w_down = false;
 		break;
-
 	case 32: //space
 		player->w_down = false;
 		break;
@@ -603,7 +602,6 @@ void OnKeyDown(HWND hwnd, UINT vk, BOOL fDown, int cRepeat, UINT flags)
 	case 87: //w
 		player->w_down = true;
 		break;
-
 	case 32: //space
 		player->w_down = true;
 		break;
@@ -674,6 +672,25 @@ void InitGame() {
 
 	currentLevel->blocks.push_back(new Platform(1.7, -0.3, 0.05, g_blockTex, 1));
 	currentLevel->blocks.push_back(new Platform(1.8, -0.3, 0.05, g_blockTex, 1));
+	currentLevel->blocks.push_back(new Platform(1.9, -0.3, 0.05, g_blockTex, 1));
+	currentLevel->blocks.push_back(new Platform(2.0, -0.3, 0.05, g_blockTex, 1));
+	currentLevel->blocks.push_back(new Platform(2.1, -0.3, 0.05, g_blockTex, 1));
+	currentLevel->blocks.push_back(new Platform(2.2, -0.3, 0.05, g_blockTex, 1));
+
+	currentLevel->blocks.push_back(new Platform(2.3, -0.3, 0.05, g_stoneBlockTex, 0));
+	currentLevel->blocks.push_back(new Platform(2.3, -0.2, 0.05, g_stoneBlockTex, 0));
+	currentLevel->blocks.push_back(new Platform(2.3, -0.1, 0.05, g_stoneBlockTex, 0));
+	currentLevel->blocks.push_back(new Platform(2.3, 0, 0.05, g_stoneBlockTex, 0));
+	currentLevel->blocks.push_back(new Platform(2.3, 0.3, 0.05, g_stoneBlockTex, 0));
+
+	currentLevel->blocks.push_back(new Platform(2.4, -0.3, 0.05, g_blockTex, 1));
+	currentLevel->blocks.push_back(new Platform(2.5, -0.3, 0.05, g_blockTex, 1));
+	currentLevel->blocks.push_back(new Platform(2.6, -0.3, 0.05, g_blockTex, 1));
+	currentLevel->blocks.push_back(new Platform(2.7, -0.3, 0.05, g_blockTex, 1));
+
+	currentLevel->blocks.push_back(new Platform(3.0, -0.2, 0.05, g_stoneBlockTex, 0));
+	currentLevel->blocks.push_back(new Platform(3.1, -0.2, 0.05, g_stoneBlockTex, 0));
+	currentLevel->blocks.push_back(new Platform(3.2, -0.2, 0.05, g_stoneBlockTex, 0));
 
 }
 
