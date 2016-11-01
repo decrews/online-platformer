@@ -763,35 +763,35 @@ void InitGame() {
 	currentLevel->blocks.push_back(new Platform(5.1, -0.7, 0.05, g_ground, 1));
 
 	currentLevel->blocks.push_back(new Platform(5.4, -0.4, 0.05, g_ground, 0));
-	currentLevel->blocks.push_back(new Platform(5.4, 0.1, 0.05, g_ground, 0));
-	currentLevel->blocks.push_back(new Platform(5.4, 0.5, 0.05, g_ground, 0));
-	currentLevel->blocks.push_back(new Platform(5.8, -0.2, 0.05, g_ground, 0));
+	currentLevel->blocks.push_back(new Platform(5.4, 0.1, 0.05, g_ground, 1));
+	currentLevel->blocks.push_back(new Platform(5.4, 0.6, 0.05, g_ground, 1));
+	currentLevel->blocks.push_back(new Platform(5.8, -0.2, 0.05, g_ground, 1));
 	currentLevel->blocks.push_back(new Platform(5.8, 0.3, 0.05, g_ground, 0));
-	currentLevel->blocks.push_back(new Platform(5.8, 0.8, 0.05, g_ground, 0));
-	currentLevel->blocks.push_back(new Platform(6.2, -0.4, 0.05, g_ground, 0));
+	currentLevel->blocks.push_back(new Platform(5.8, 0.8, 0.05, g_ground, 1));
+	currentLevel->blocks.push_back(new Platform(6.2, -0.4, 0.05, g_ground, 1));
 	currentLevel->blocks.push_back(new Platform(6.2, 0.1, 0.05, g_ground, 0));
-	currentLevel->blocks.push_back(new Platform(6.2, 0.5, 0.05, g_ground, 0));
-	currentLevel->blocks.push_back(new Platform(6.6, -0.2, 0.05, g_ground, 0));
-	currentLevel->blocks.push_back(new Platform(6.6, 0.3, 0.05, g_ground, 0));
+	currentLevel->blocks.push_back(new Platform(6.2, 0.6, 0.05, g_ground, 1));
+	currentLevel->blocks.push_back(new Platform(6.6, -0.2, 0.05, g_ground, 1));
+	currentLevel->blocks.push_back(new Platform(6.6, 0.3, 0.05, g_ground, 1));
 	currentLevel->blocks.push_back(new Platform(6.6, 0.8, 0.05, g_ground, 0));
 
-	currentLevel->blocks.push_back(new Platform(7.0, 1.1, 0.05, g_corner, 0));
-	currentLevel->blocks.push_back(new Platform(7.1, 1.1, 0.05, g_stoneBlockTex, 0));
-	currentLevel->blocks.push_back(new Platform(7.2, 1.1, 0.05, g_stoneBlockTex, 0));
-	currentLevel->blocks.push_back(new Platform(7.3, 1.1, 0.05, g_stoneBlockTex, 0));
-	currentLevel->blocks.push_back(new Platform(7.4, 1.1, 0.05, g_stoneBlockTex, 0));
-	currentLevel->blocks.push_back(new Platform(7.5, 1.1, 0.05, g_stoneBlockTex, 0));
-	currentLevel->blocks.push_back(new Platform(7.6, 1.1, 0.05, g_stoneBlockTex, 0));
-	currentLevel->blocks.push_back(new Platform(7.7, 1.1, 0.05, g_corner2, 0));
+	currentLevel->blocks.push_back(new Platform(7.0, 0.9, 0.05, g_corner, 0));
+	currentLevel->blocks.push_back(new Platform(7.1, 0.9, 0.05, g_stoneBlockTex, 0));
+	currentLevel->blocks.push_back(new Platform(7.2, 0.9, 0.05, g_stoneBlockTex, 0));
+	currentLevel->blocks.push_back(new Platform(7.3, 0.9, 0.05, g_stoneBlockTex, 0));
+	currentLevel->blocks.push_back(new Platform(7.4, 0.9, 0.05, g_stoneBlockTex, 0));
+	currentLevel->blocks.push_back(new Platform(7.5, 0.9, 0.05, g_stoneBlockTex, 0));
+	currentLevel->blocks.push_back(new Platform(7.6, 0.9, 0.05, g_stoneBlockTex, 0));
+	currentLevel->blocks.push_back(new Platform(7.7, 0.9, 0.05, g_corner2, 0));
 
-	currentLevel->blocks.push_back(new Platform(7.0, 1.0, 0.05, g_ground, 0));
-	currentLevel->blocks.push_back(new Platform(7.1, 1.0, 0.05, g_ground, 0));
-	currentLevel->blocks.push_back(new Platform(7.2, 1.0, 0.05, g_ground, 0));
-	currentLevel->blocks.push_back(new Platform(7.3, 1.0, 0.05, g_ground, 0));
-	currentLevel->blocks.push_back(new Platform(7.4, 1.0, 0.05, g_ground, 0));
-	currentLevel->blocks.push_back(new Platform(7.5, 1.0, 0.05, g_ground, 0));
-	currentLevel->blocks.push_back(new Platform(7.6, 1.0, 0.05, g_ground, 0));
-	currentLevel->blocks.push_back(new Platform(7.7, 1.0, 0.05, g_ground, 0));
+	currentLevel->blocks.push_back(new Platform(7.0, 0.8, 0.05, g_ground, 0));
+	currentLevel->blocks.push_back(new Platform(7.1, 0.8, 0.05, g_ground, 0));
+	currentLevel->blocks.push_back(new Platform(7.2, 0.8, 0.05, g_ground, 0));
+	currentLevel->blocks.push_back(new Platform(7.3, 0.8, 0.05, g_ground, 0));
+	currentLevel->blocks.push_back(new Platform(7.4, 0.8, 0.05, g_ground, 0));
+	currentLevel->blocks.push_back(new Platform(7.5, 0.8, 0.05, g_ground, 0));
+	currentLevel->blocks.push_back(new Platform(7.6, 0.8, 0.05, g_ground, 0));
+	currentLevel->blocks.push_back(new Platform(7.7, 0.8, 0.05, g_ground, 0));
 
 
 

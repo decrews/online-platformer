@@ -7,25 +7,37 @@ Player::Player(Level* cLevel) {
 
 
 
+//bool Player::groundCheck(Rect* rect) {
+//	if (this->rect->collides(rect)) {
+//		if (this->rect->y > rect->y + (rect->height / 2)
+//			&& this->rect->x - (this->rect->width / 500) > rect->x - (rect->width / 2)
+//			&& this->rect->x + (this->rect->width / 500) < rect->x + (rect->width / 2)) {
+//			OutputDebugString(L"Testing\n");
+//			return true;
+//		}
+//		else {
+//			return false;
+//		}
+//	}
+//	return false;
+//}
+
 bool Player::groundCheck(Rect* rect) {
 	if (this->rect->collides(rect)) {
-		if (this->rect->y > rect->y + (rect->height / 2)
-			&& this->rect->x - (this->rect->width / 500) > rect->x - (rect->width / 2)
-			&& this->rect->x + (this->rect->width / 500) < rect->x + (rect->width / 2)) {
-			OutputDebugString(L"Testing\n");
+		float diff = sqrt((this->rect->y - (rect->y + rect->height/ 2))*(this->rect->y - (rect->y + rect->height / 2)));
+		if (diff < rect->height) {
 			return true;
 		}
 		else {
 			return false;
 		}
+		return false;
 	}
-	return false;
 }
-
 
 bool Player::wallCheck(Rect* rect) {
 	if (this->rect->collides(rect)) {
-		float diff = sqrt((xPos - rect->x - (rect->width / 2))*(xPos - rect->x - (rect->width / 2)));
+		float diff = sqrt((xPos - (rect->x + rect->width / 2))*(xPos - (rect->x + rect->width / 2)));
 		if (diff < rect->width) {
 			return true;
 		}
@@ -110,8 +122,8 @@ void Player::update(long elapsed_microseconds) {
 
 	// Smooth out walking on falling blocks.
 	if (hitGround == true) {
-		yPos += 0.001;
-		rect->y += 0.001;
+		yPos += 0.00001;
+		rect->y += 0.00001;
 	}
 
 	// If the player is not against the wall, move the platforms
