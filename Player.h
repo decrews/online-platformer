@@ -60,7 +60,7 @@ public:
 	float jumpHeight = 0.018;
 	
 	float xPos = 0;
-	float yPos = -0.4;
+	float yPos = 0;
 
 	float xVelPrev = 0;
 	float yPosPrev = 0;

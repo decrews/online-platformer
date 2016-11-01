@@ -83,7 +83,7 @@ void Level::update(long elapsed_microseconds) {
 		block->rect->x -= levelPosChange;
 
 		if (block->falling == true) {
-			block->yVel += block->fallingSpeed;
+			block->yVel += block->fallingSpeed*15.0;
 
 			block->yPos -= block->yVel * dt;
 			block->rect->y -= block->yVel * dt;
