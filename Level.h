@@ -2,6 +2,7 @@
 #include <vector>
 #include <D3D11.h>
 #include "Platform.h"
+#include "Door.h"
 #include "STRUCTS.h"
 
 class Level
@@ -21,6 +22,7 @@ public:
 
 	std::vector<Platform*> blocks;
 	std::vector<Platform*> fallingBlocks;
+	std::vector<Door*> doors;
 	float levelPosChange = 0;
 	float gravity = 0.0005;
 };
