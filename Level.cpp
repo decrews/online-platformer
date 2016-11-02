@@ -92,7 +92,7 @@ void Level::update(long elapsed_microseconds) {
 	}
 
 	// Update the background with every levelPosChange;
-	bgPos -= levelPosChange / 8;
+	bgPos -= levelPosChange / 10;
 	
 }
 

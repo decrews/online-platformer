@@ -23,15 +23,12 @@ Player::Player(Level* cLevel) {
 //}
 
 bool Player::groundCheck(Rect* rect) {
-	float buffer = rect->width * 0.492;
-
 	if (this->rect->collides(rect)) {
-		float diff = this->rect->y - (rect->y + rect->height/ 2);
-		if (diff < rect->height) {
-			if (this->rect->x >= rect->x - buffer
-				&& this->rect->x <= rect->x + buffer) {
-				return true;
-			}
+		float diff = this->rect->y - (rect->y + rect->height / 2);
+		if (diff < rect->height
+			&& this->rect->x - (this->rect->width / 100) > rect->x - (rect->width / 2)
+			&& this->rect->x + (this->rect->width / 100) < rect->x + (rect->width / 2)) {
+			return true;
 		}
 		else {
 			return false;
