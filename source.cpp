@@ -677,6 +677,15 @@ void InitGame() {
 	// The last argument determines block type
 	// 0 = normal block
 	// 1 = falling block (speed constant in Level class)
+
+	currentLevel->blocks.push_back(new Platform(-0.6, 0.2, 0.05, g_stoneBlockTex, 0));
+	currentLevel->blocks.push_back(new Platform(-0.7, 0.3, 0.05, g_stoneBlockTex, 0));
+	currentLevel->blocks.push_back(new Platform(-0.8, 0.2, 0.05, g_stoneBlockTex, 0));
+	currentLevel->blocks.push_back(new Platform(0.2, -0.2, 0.05, g_ground, 0));
+	currentLevel->blocks.push_back(new Platform(0.4, -0.4, 0.05, g_ground, 0));
+
+	currentLevel->blocks.push_back(new Platform(0.2, 0.1, 0.05, g_ground, 0));
+
 	currentLevel->blocks.push_back(new Platform(-0.8, -0.2, 0.05, g_stoneBlockTex, 0));
 	currentLevel->blocks.push_back(new Platform(-0.7, -0.2, 0.05, g_stoneBlockTex, 0));
 	currentLevel->blocks.push_back(new Platform(-0.6, -0.2, 0.05, g_stoneBlockTex, 0));

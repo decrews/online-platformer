@@ -23,10 +23,15 @@ Player::Player(Level* cLevel) {
 //}
 
 bool Player::groundCheck(Rect* rect) {
+	float buffer = rect->width * 0.492;
+
 	if (this->rect->collides(rect)) {
-		float diff = sqrt((this->rect->y - (rect->y + rect->height/ 2))*(this->rect->y - (rect->y + rect->height / 2)));
+		float diff = this->rect->y - (rect->y + rect->height/ 2);
 		if (diff < rect->height) {
-			return true;
+			if (this->rect->x >= rect->x - buffer
+				&& this->rect->x <= rect->x + buffer) {
+				return true;
+			}
 		}
 		else {
 			return false;
@@ -35,9 +40,29 @@ bool Player::groundCheck(Rect* rect) {
 	}
 }
 
+
+bool Player::headCheck(Rect* rect) {
+	float buffer = rect->width * 0.46;
+
+	if (this->rect->collides(rect)) {
+		float diff = this->rect->y + (rect->y - rect->height / 2);
+		if (diff - 0.7 < rect->height) {
+			if (this->rect->x >= rect->x - buffer
+				&& this->rect->x <= rect->x + buffer) {
+				return true;
+			}
+		}
+		else {
+			return false;
+		}
+		return false;
+	}
+}
+
+
 bool Player::wallCheck(Rect* rect) {
 	if (this->rect->collides(rect)) {
-		float diff = sqrt((xPos - (rect->x + rect->width / 2))*(xPos - (rect->x + rect->width / 2)));
+		float diff = this->rect->x - (rect->x + rect->width / 2);
 		if (diff < rect->width) {
 			return true;
 		}
@@ -83,7 +108,6 @@ void Player::update(long elapsed_microseconds) {
 	
 
 	// Move Player
-	yPos += yVel  * dt;
 	rect->y += yVel  * dt;
 	currentLevel->levelPosChange = xVel  * dt;
 
@@ -96,6 +120,8 @@ void Player::update(long elapsed_microseconds) {
 
 		// Checks to see if there is a collision with the ground.
 		if (groundCheck(block->rect)) {
+
+			OutputDebugStringW(L"Ground collision triggered.\n");
 			hitGround = true;
 			grounded = true;
 
@@ -107,23 +133,33 @@ void Player::update(long elapsed_microseconds) {
 
 		// If ground collision did happen (hitGround), then undo the move (-yVel)
 		if (hitGround == true) {
-			yPos -= yVel  * dt;
 			rect->y -= yVel  * dt;
 			yVel = 0;
 		}
-
+		
 		// Checks every block to see if the player is against it.
 		// If so, flag it so that the wall updates are handled correctly.
-		if (wallCheck(block->rect)) {
+		if (wallCheck(block->rect) && !block->falling) {
 			againstWall = true;
 			OutputDebugStringW(L"Wall collision triggered.\n");
 		}
+		
+		if (headCheck(block->rect) && !block->falling) {
+			OutputDebugStringW(L"Head check triggered.\n");
+			// Set the location of the player to the bottom of the block
+			rect->y = (block->rect->y - block->rect->height / 2) - 0.03;
+			// Reverse the velocity to "bounce" the player back down
+			yVel = -yVel;
+
+			grounded = false;
+			hitGround = false;
+		}
+		
 	}
 
 	// Smooth out walking on falling blocks.
 	if (hitGround == true) {
-		yPos += 0.00001;
-		rect->y += 0.00001;
+		rect->y += 0.001 * dt;
 	}
 
 	// If the player is not against the wall, move the platforms
@@ -144,7 +180,7 @@ void Player::update(long elapsed_microseconds) {
 		currentLevel->levelPosChange = -xVelPrev;
 	}
 
-	if (yPos <= -1.5) {
+	if (this->rect->y <= -1.5) {
 		PostQuitMessage(0);
 	}
 }
@@ -163,8 +199,8 @@ void Player::draw(VS_CONSTANT_BUFFER* cbuffer, ID3D11DeviceContext* gcontext,
 	cbuffer->adjustedHeight = adjustedHeight;
 
 	// Constant buffer data for movement
-	cbuffer->x = xPos;
-	cbuffer->y = yPos;
+	cbuffer->x = this->rect->x;
+	cbuffer->y = this->rect->y;
 
 	// Scale
 	cbuffer->scale = 1;
