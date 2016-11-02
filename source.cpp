@@ -801,7 +801,7 @@ void InitGame() {
 	currentLevel->blocks.push_back(new Platform(7.6, 0.8, 0.05, g_ground, 0));
 	currentLevel->blocks.push_back(new Platform(7.7, 0.8, 0.05, g_ground, 0));
 
-	currentLevel->doors.push_back(new Door(7.2, 1.0, 0.05, g_ground));
+	//currentLevel->doors.push_back(new Door(7.2, 1.0, 0.05, g_ground));
 
 }
 
