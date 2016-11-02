@@ -30,7 +30,7 @@ bool Player::groundCheck(Rect* rect) {
 //		if (this->rect->y > rect->y + (rect->height / 2)
 //			&& this->rect->x - (this->rect->width / 500) > rect->x - (rect->width / 2)
 //			&& this->rect->x + (this->rect->width / 500) < rect->x + (rect->width / 2)) {
-//			c
+//			
 //			return true;
 //		}
 //		else {
