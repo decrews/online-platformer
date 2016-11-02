@@ -8,6 +8,7 @@ class Player
 public:
 	Player(Level* cLevel);
 	bool groundCheck(Rect* rect);
+	bool headCheck(Rect* rect);
 	bool wallCheck(Rect* rect);
 	void movePlayer(float x, float y);
 	void update(long elapsed_microseconds);
@@ -56,15 +57,15 @@ public:
 	float speed = 0.007;
 	float jumpHeight = 0.018;
 	
-	float xPos = 0;
-	float yPos = -0.4;
+	float initialX = 0;
+	float initialY = 0;
 
 	float xVelPrev = 0;
 	float yPosPrev = 0;
 
 	float xVel = 0;
 	float yVel = 0;
-	Rect* rect = new Rect(adjustedWidth, adjustedHeight, xPos, yPos);
+	Rect* rect = new Rect(adjustedWidth, adjustedHeight, initialX, initialY);
 	Level* currentLevel;
 };
 
