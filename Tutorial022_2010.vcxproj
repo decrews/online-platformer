@@ -372,17 +372,20 @@
   </ItemDefinitionGroup>
   <ItemGroup />
   <ItemGroup>
+    <ClCompile Include="Door.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Level.cpp" />
     <ClCompile Include="Platform.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Rect.cpp" />
     <ClCompile Include="source.cpp" />
+    <ClCompile Include="Switch.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="shader.fx" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Door.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="groundwork.h" />
     <ClInclude Include="Level.h" />
@@ -391,6 +394,7 @@
     <ClInclude Include="Rect.h" />
     <CLInclude Include="resource.h" />
     <ClInclude Include="STRUCTS.h" />
+    <ClInclude Include="Switch.h" />
     <ResourceCompile Include="homework2.rc" />
   </ItemGroup>
   <ItemGroup>

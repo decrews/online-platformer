@@ -25,6 +25,7 @@ public:
 	bool s_down = false;
 	bool d_down = false;
 	bool w_up = true;
+	bool e_down = false;
 
 	// Animation variables
 	bool animationActive = false;

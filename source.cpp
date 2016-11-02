@@ -7,6 +7,8 @@
 #include "Player.h"
 #include "Level.h"
 #include "Platform.h"
+#include"Door.h"
+#include"Switch.h"
 #include "STRUCTS.h"
 
 //--------------------------------------------------------------------------------------
@@ -601,6 +603,9 @@ void OnKeyUp(HWND hwnd, UINT vk, BOOL fDown, int cRepeat, UINT flags)
 	case 87: //w
 		player->w_down = false;
 		break;
+	case 69: //e
+		player->e_down = false;
+		break;
 	case 32: //space
 		player->w_down = false;
 		break;
@@ -623,6 +628,9 @@ void OnKeyDown(HWND hwnd, UINT vk, BOOL fDown, int cRepeat, UINT flags)
 		break;
 	case 83: //s
 		player->s_down = true;
+		break;
+	case 69: //e
+		player->e_down = true;
 		break;
 	case 87: //w
 		player->w_down = true;
@@ -793,7 +801,7 @@ void InitGame() {
 	currentLevel->blocks.push_back(new Platform(7.6, 0.8, 0.05, g_ground, 0));
 	currentLevel->blocks.push_back(new Platform(7.7, 0.8, 0.05, g_ground, 0));
 
-
+	//currentLevel->doors.push_back(new Door(7.2, 1.0, 0.05, g_ground));
 
 }
 

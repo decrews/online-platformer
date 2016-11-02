@@ -19,6 +19,12 @@
     <ClCompile Include="source.cpp">
       <Filter>cpp</Filter>
     </ClCompile>
+    <ClCompile Include="Switch.cpp">
+      <Filter>cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="Door.cpp">
+      <Filter>cpp</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="STRUCTS.h">
@@ -43,6 +49,12 @@
       <Filter>headers</Filter>
     </ClInclude>
     <ClInclude Include="Game.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Switch.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Door.h">
       <Filter>headers</Filter>
     </ClInclude>
   </ItemGroup>

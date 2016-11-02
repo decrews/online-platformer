@@ -5,6 +5,24 @@ Player::Player(Level* cLevel) {
 	currentLevel = cLevel;
 }
 
+bool Player::groundCheck(Rect* rect) {
+	float buffer = rect->width * 0.493;
+
+	if (this->rect->collides(rect)) {
+		float diff = this->rect->y - (rect->y + rect->height / 2);
+		if (diff < rect->height) {
+			if (this->rect->x >= rect->x - buffer
+				&& this->rect->x <= rect->x + buffer) {
+				OutputDebugString(L"Testing\n");
+				return true;
+			}
+		}
+		else {
+			return false;
+		}
+		return false;
+	}
+}
 
 
 //bool Player::groundCheck(Rect* rect) {
@@ -12,7 +30,7 @@ Player::Player(Level* cLevel) {
 //		if (this->rect->y > rect->y + (rect->height / 2)
 //			&& this->rect->x - (this->rect->width / 500) > rect->x - (rect->width / 2)
 //			&& this->rect->x + (this->rect->width / 500) < rect->x + (rect->width / 2)) {
-//			OutputDebugString(L"Testing\n");
+//			c
 //			return true;
 //		}
 //		else {
@@ -22,18 +40,19 @@ Player::Player(Level* cLevel) {
 //	return false;
 //}
 
-bool Player::groundCheck(Rect* rect) {
-	if (this->rect->collides(rect)) {
-		float diff = sqrt((this->rect->y - (rect->y + rect->height/ 2))*(this->rect->y - (rect->y + rect->height / 2)));
-		if (diff < rect->height) {
-			return true;
-		}
-		else {
-			return false;
-		}
-		return false;
-	}
-}
+//bool Player::groundCheck(Rect* rect) {
+//	if (this->rect->collides(rect)) {
+//		float diff = sqrt((this->rect->y - (rect->y + rect->height/ 2))*(this->rect->y - (rect->y + rect->height / 2)));
+//		if (diff < rect->height) {
+//			OutputDebugString(L"Testing\n");
+//			return true;
+//		}
+//		else {
+//			return false;
+//		}
+//		return false;
+//	}
+//}
 
 bool Player::wallCheck(Rect* rect) {
 	if (this->rect->collides(rect)) {
@@ -81,6 +100,10 @@ void Player::update(long elapsed_microseconds) {
 		yVel -= currentLevel->gravity * dt;
 	}
 	
+	if (e_down)
+	{
+		
+	}
 
 	// Move Player
 	yPos += yVel  * dt;
@@ -122,8 +145,8 @@ void Player::update(long elapsed_microseconds) {
 
 	// Smooth out walking on falling blocks.
 	if (hitGround == true) {
-		yPos += 0.00001;
-		rect->y += 0.00001;
+		yPos += 0.0005;
+		rect->y += 0.0005;
 	}
 
 	// If the player is not against the wall, move the platforms
