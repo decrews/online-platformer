@@ -18,6 +18,7 @@ public:
 	void update(long elapsed_microseconds);
 
 	ID3D11ShaderResourceView* bgTex; // Background Texture
+	float bgPos = 0;
 
 	std::vector<Platform*> blocks;
 	std::vector<Platform*> fallingBlocks;

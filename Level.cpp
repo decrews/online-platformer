@@ -19,8 +19,8 @@ void Level::draw(VS_CONSTANT_BUFFER* cbuffer, ID3D11DeviceContext* gcontext,
 	cbuffer->adjustedHeight = 0;
 
 	// Constant buffer variables for movement
-	cbuffer->x = 0.2;
-	cbuffer->y = 0.2;
+	cbuffer->x = bgPos;
+	cbuffer->y = 0;
 
 	// Scale
 	cbuffer->scale = 2;
@@ -108,17 +108,21 @@ void Level::update(long elapsed_microseconds) {
 	// Put level activity here.  Moving platforms, enemies, etc.
 	float dt = elapsed_microseconds / 10000.0;
 
+	// Update the blocks with every levelPosChange
 	for (auto block : blocks) {
 		block->xPos -= levelPosChange;
 		block->rect->x -= levelPosChange;
 
 		if (block->falling == true) {
-			block->yVel += block->fallingSpeed*15.0;
+			block->yVel += block->fallingSpeed * dt;
 
 			block->yPos -= block->yVel * dt;
 			block->rect->y -= block->yVel * dt;
 		}
 	}
+
+	// Update the background with every levelPosChange;
+	bgPos -= levelPosChange / 10;
 	
 }
 
