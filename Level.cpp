@@ -12,7 +12,7 @@ void Level::draw(VS_CONSTANT_BUFFER* cbuffer, ID3D11DeviceContext* gcontext,
 	ID3D11Buffer* constBuffer, ID3D11SamplerState* sampler,
 	ID3D11Buffer* vb, UINT stride, UINT offset) {
 
-	/*
+	
 	// Constant buffer data for background
 	cbuffer->currentFrameColumn = 0;
 	cbuffer->adjustedWidth = 0;
@@ -40,7 +40,7 @@ void Level::draw(VS_CONSTANT_BUFFER* cbuffer, ID3D11DeviceContext* gcontext,
 	// Set vertex buffer and Draw
 	gcontext->IASetVertexBuffers(0, 1, &vb, &stride, &offset);
 	gcontext->Draw(6, 0);
-	*/
+	
 
 	for (auto curPlatform : blocks) {
 		// Constant buffer data for background

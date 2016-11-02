@@ -398,7 +398,7 @@ HRESULT InitDevice()
 	VsConstData->x = 0;
 	VsConstData->y = 0;
 	VsConstData->scale = 0;
-	VsConstData->some_variable_h = 0;
+	VsConstData->extra = 0;
 	
 	// Fill in a buffer description.
 	D3D11_BUFFER_DESC cbDesc;
