@@ -178,7 +178,14 @@ void Player::update(long elapsed_microseconds) {
 	}
 
 	if (this->rect->y <= -1.5) {
-		PostQuitMessage(0);
+		// Reset player's position on the screen
+		this->rect->x = 0.0;
+		this->rect->y = 0.0;
+
+		// Move the player back to his original position:
+		currentLevel->levelPosChange = -currentLevel->levelPosition - 0.6;
+		
+		//PostQuitMessage(0);
 	}
 }
 

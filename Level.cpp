@@ -132,6 +132,10 @@ void Level::update(long elapsed_microseconds) {
 	// Update the background with every levelPosChange;
 	bgPos -= levelPosChange / 10;
 	
+	// levelPosition - Total offset from the player's original position.
+	// levelPosChange - The amount of change from this frame.
+	levelPosition += levelPosChange;
+
 }
 
 

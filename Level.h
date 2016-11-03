@@ -24,6 +24,8 @@ public:
 	std::vector<Platform*> fallingBlocks;
 	std::vector<Door*> doors;
 	float levelPosChange = 0;
+	float levelPosition = 0;
+	float worldPos = 0;
 	float gravity = 0.0005;
 };
 
