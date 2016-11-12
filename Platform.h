@@ -9,7 +9,7 @@ public:
 	~Platform();
 
 	bool falling = false;
-	float fallingSpeed = 0.0001;
+	float fallingSpeed = 0.00005;
 	int type;
 	
 	float xPos;

@@ -154,9 +154,24 @@ void Player::update(long elapsed_microseconds) {
 		
 	}
 
+	//check point system
+	for (Door* block : currentLevel->doors)
+	{
+		if (wallCheck(block->rect))
+		{
+			this->initialX = block->xPos;
+			this->initialY = block->yPos + 0.1;
+
+			// Move the player back to his original position:
+			currentLevel->offset = block->xPos + 0.2;
+
+			OutputDebugStringW(L"Checkpoint reached.\n");
+		}
+	}
+
 	// Smooth out walking on falling blocks.
 	if (hitGround == true) {
-		rect->y += 0.001 * dt;
+		rect->y += 0.02 * dt;
 	}
 
 	// If the player is not against the wall, move the platforms
@@ -179,11 +194,11 @@ void Player::update(long elapsed_microseconds) {
 
 	if (this->rect->y <= -1.5) {
 		// Reset player's position on the screen
-		this->rect->x = 0.0;
-		this->rect->y = 0.0;
+		this->rect->x = this->initialX;
+		this->rect->y = this->initialY;
 
 		// Move the player back to his original position:
-		currentLevel->levelPosChange = -currentLevel->levelPosition - 0.6;
+		currentLevel->levelPosChange = -currentLevel->levelPosition - currentLevel->offset;
 		
 		//PostQuitMessage(0);
 	}

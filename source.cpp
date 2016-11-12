@@ -47,6 +47,7 @@ ID3D11ShaderResourceView*           g_stoneWall2 = NULL;
 ID3D11ShaderResourceView*           g_ground = NULL;
 ID3D11ShaderResourceView*           g_corner = NULL;
 ID3D11ShaderResourceView*           g_corner2 = NULL;
+ID3D11ShaderResourceView*           g_checkPoint = NULL;
 
 ID3D11SamplerState*                 g_Sampler = NULL;
 ID3D11BlendState*					g_BlendState;
@@ -451,6 +452,9 @@ HRESULT InitDevice()
 	if (FAILED(hr))
 		return hr;
 
+	hr = D3DX11CreateShaderResourceViewFromFile(g_pd3dDevice, L"Door.jpg", NULL, NULL, &g_checkPoint, NULL);
+	if (FAILED(hr))
+		return hr;
 	// Create the sample state
 	D3D11_SAMPLER_DESC sampDesc;
 	ZeroMemory(&sampDesc, sizeof(sampDesc));
@@ -678,132 +682,162 @@ void InitGame() {
 	// 0 = normal block
 	// 1 = falling block (speed constant in Level class)
 
-	/*currentLevel->blocks.push_back(new Platform(-0.6, 0.2, 0.05, g_stoneBlockTex, 0));
-	currentLevel->blocks.push_back(new Platform(-0.7, 0.3, 0.05, g_stoneBlockTex, 0));
-	currentLevel->blocks.push_back(new Platform(-0.8, 0.2, 0.05, g_stoneBlockTex, 0));
-	currentLevel->blocks.push_back(new Platform(0.2, -0.2, 0.05, g_ground, 0));
-	currentLevel->blocks.push_back(new Platform(0.4, -0.4, 0.05, g_ground, 0));
+	//center of the universe? (-0.2, -0.6)
 
-	currentLevel->blocks.push_back(new Platform(0.2, 0.1, 0.05, g_ground, 0));*/
 
+	//giant wall to the left
+	for (float i = -0.1; i < 1.2; i += 0.1)
+	{
+		currentLevel->blocks.push_back(new Platform(-0.9, i, 0.05, g_stoneWall, 0));
+	}
+	for (float i = -1.0; i < -0.1; i += 0.1)
+	{
+		currentLevel->blocks.push_back(new Platform(-0.9, i, 0.05, g_ground, 0));
+	}
+	for (float i = -1.0; i < 1.2; i += 0.1)
+	{
+		currentLevel->blocks.push_back(new Platform(-1.0, i, 0.05, g_ground, 0));
+		currentLevel->blocks.push_back(new Platform(-1.1, i, 0.05, g_ground, 0));
+		currentLevel->blocks.push_back(new Platform(-1.2, i, 0.05, g_ground, 0));
+		currentLevel->blocks.push_back(new Platform(-1.3, i, 0.05, g_ground, 0));
+		currentLevel->blocks.push_back(new Platform(-1.4, i, 0.05, g_ground, 0));
+		currentLevel->blocks.push_back(new Platform(-1.5, i, 0.05, g_ground, 0));
+		currentLevel->blocks.push_back(new Platform(-1.6, i, 0.05, g_ground, 0));
+		currentLevel->blocks.push_back(new Platform(-1.7, i, 0.05, g_ground, 0));
+		currentLevel->blocks.push_back(new Platform(-1.8, i, 0.05, g_ground, 0));
+	}
+
+	//upper layer of ground
 	currentLevel->blocks.push_back(new Platform(-0.8, -0.2, 0.05, g_stoneBlockTex, 0));
 	currentLevel->blocks.push_back(new Platform(-0.7, -0.2, 0.05, g_stoneBlockTex, 0));
 	currentLevel->blocks.push_back(new Platform(-0.6, -0.2, 0.05, g_stoneBlockTex, 0));
-	currentLevel->blocks.push_back(new Platform(-0.4, -0.6, 0.05, g_stoneBlockTex, 0));
-	currentLevel->blocks.push_back(new Platform(-0.3, -0.6, 0.05, g_stoneBlockTex, 0));
-	currentLevel->blocks.push_back(new Platform(-0.2, -0.6, 0.05, g_stoneBlockTex, 0));
-	currentLevel->blocks.push_back(new Platform(-0.1, -0.6, 0.05, g_corner2, 0));
-	currentLevel->blocks.push_back(new Platform(0.0, -0.7, 0.05, g_stoneBlockTex, 0));
-	currentLevel->blocks.push_back(new Platform(0.1, -0.7, 0.05, g_stoneBlockTex, 0));
-	currentLevel->blocks.push_back(new Platform(0.2, -0.7, 0.05, g_stoneBlockTex, 0));
-	currentLevel->blocks.push_back(new Platform(0.3, -0.7, 0.05, g_stoneBlockTex, 0));
-	currentLevel->blocks.push_back(new Platform(0.4, -0.7, 0.05, g_stoneBlockTex, 0));
-	currentLevel->blocks.push_back(new Platform(0.5, -0.7, 0.05, g_stoneBlockTex, 0));
-	currentLevel->blocks.push_back(new Platform(0.6, -0.7, 0.05, g_stoneBlockTex, 0));
-	currentLevel->blocks.push_back(new Platform(0.7, -0.7, 0.05, g_stoneBlockTex, 0));
-	currentLevel->blocks.push_back(new Platform(0.8, -0.7, 0.05, g_corner2, 0));
+	
+	//lower layers of ground
+	for (float i = -1.0; i < -0.2; i += 0.1)
+	{
+		currentLevel->blocks.push_back(new Platform(-0.8, i, 0.05, g_ground, 0));
+		currentLevel->blocks.push_back(new Platform(-0.7, i, 0.05, g_ground, 0));
+		currentLevel->blocks.push_back(new Platform(-0.6, i, 0.05, g_ground, 0));
 
-	currentLevel->blocks.push_back(new Platform(-0.8, -0.3, 0.05, g_ground, 0));
-	currentLevel->blocks.push_back(new Platform(-0.7, -0.3, 0.05, g_ground, 0));
-	currentLevel->blocks.push_back(new Platform(-0.6, -0.3, 0.05, g_ground, 0));
-	currentLevel->blocks.push_back(new Platform(-0.4, -0.7, 0.05, g_ground, 0));
-	currentLevel->blocks.push_back(new Platform(-0.3, -0.7, 0.05, g_ground, 0));
-	currentLevel->blocks.push_back(new Platform(-0.2, -0.7, 0.05, g_ground, 0));
-	currentLevel->blocks.push_back(new Platform(-0.1, -0.7, 0.05, g_ground, 0));
-	currentLevel->blocks.push_back(new Platform(0.0, -0.8, 0.05, g_ground, 0));
-	currentLevel->blocks.push_back(new Platform(0.1, -0.8, 0.05, g_ground, 0));
-	currentLevel->blocks.push_back(new Platform(0.2, -0.8, 0.05, g_ground, 0));
-	currentLevel->blocks.push_back(new Platform(0.3, -0.8, 0.05, g_ground, 0));
-	currentLevel->blocks.push_back(new Platform(0.4, -0.8, 0.05, g_ground, 0));
-	currentLevel->blocks.push_back(new Platform(0.5, -0.8, 0.05, g_ground, 0));
-	currentLevel->blocks.push_back(new Platform(0.6, -0.8, 0.05, g_ground, 0));
-	currentLevel->blocks.push_back(new Platform(0.7, -0.8, 0.05, g_ground, 0));
-	currentLevel->blocks.push_back(new Platform(0.8, -0.8, 0.05, g_ground, 0));
+	}
 
+	//details on the first wall after spawn
 	currentLevel->blocks.push_back(new Platform(-0.5, -0.2, 0.05, g_corner2, 0));
 	currentLevel->blocks.push_back(new Platform(-0.5, -0.3, 0.05, g_stoneWall, 0));
 	currentLevel->blocks.push_back(new Platform(-0.5, -0.4, 0.05, g_stoneWall, 0));
 	currentLevel->blocks.push_back(new Platform(-0.5, -0.5, 0.05, g_stoneWall, 0));
-	currentLevel->blocks.push_back(new Platform(-0.5, -0.6, 0.05, g_ground, 0));
-	currentLevel->blocks.push_back(new Platform(-0.5, -0.7, 0.05, g_ground, 0));
-	currentLevel->blocks.push_back(new Platform(-0.6, -0.4, 0.05, g_ground, 0));
-	currentLevel->blocks.push_back(new Platform(-0.6, -0.5, 0.05, g_ground, 0));
-	currentLevel->blocks.push_back(new Platform(-0.6, -0.6, 0.05, g_ground, 0));
 
-	currentLevel->blocks.push_back(new Platform(0.9, -0.6, 0.05, g_stoneBlockTex, 1));
-	currentLevel->blocks.push_back(new Platform(1.0, -0.6, 0.05, g_stoneBlockTex, 1));
-	currentLevel->blocks.push_back(new Platform(1.4, -0.5, 0.05, g_stoneBlockTex, 1));
-	currentLevel->blocks.push_back(new Platform(1.5, -0.5, 0.05, g_stoneBlockTex, 1));
-	currentLevel->blocks.push_back(new Platform(1.9, -0.4, 0.05, g_stoneBlockTex, 1));
-	currentLevel->blocks.push_back(new Platform(2.0, -0.4, 0.05, g_stoneBlockTex, 1));
-	currentLevel->blocks.push_back(new Platform(2.4, -0.3, 0.05, g_stoneBlockTex, 1));
-	currentLevel->blocks.push_back(new Platform(2.5, -0.3, 0.05, g_stoneBlockTex, 1));
-	currentLevel->blocks.push_back(new Platform(2.9, -0.2, 0.05, g_stoneBlockTex, 1));
-	currentLevel->blocks.push_back(new Platform(3.0, -0.2, 0.05, g_stoneBlockTex, 1));
+	for (float i = -0.8; i < -0.5; i += 0.1)
+	{
+		currentLevel->blocks.push_back(new Platform(-0.5, i, 0.05, g_stoneWall, 0));
+		currentLevel->blocks.push_back(new Platform(-0.5, -1.0 , 0.05, g_ground, 0));
+		currentLevel->blocks.push_back(new Platform(-0.5, -0.9, 0.05, g_ground, 0));
+	}
 
-	currentLevel->blocks.push_back(new Platform(3.4, 0.0, 0.05, g_corner, 0));
-	currentLevel->blocks.push_back(new Platform(3.5, 0.0, 0.05, g_stoneBlockTex, 0));
-	currentLevel->blocks.push_back(new Platform(3.6, 0.0, 0.05, g_stoneBlockTex, 0));
-	currentLevel->blocks.push_back(new Platform(3.7, 0.0, 0.05, g_stoneBlockTex, 0));
-	currentLevel->blocks.push_back(new Platform(3.8, 0.0, 0.05, g_stoneBlockTex, 0));
-	currentLevel->blocks.push_back(new Platform(3.9, 0.0, 0.05, g_stoneBlockTex, 0));
-	currentLevel->blocks.push_back(new Platform(4.0, 0.0, 0.05, g_stoneBlockTex, 0));
-	currentLevel->blocks.push_back(new Platform(4.1, 0.0, 0.05, g_stoneBlockTex, 0));
-	currentLevel->blocks.push_back(new Platform(4.2, 0.0, 0.05, g_stoneBlockTex, 0));
-	currentLevel->blocks.push_back(new Platform(4.3, 0.0, 0.05, g_corner2, 0));
+	//long stretch after start
+	for (float i = -0.4; i <= 4.5; i += 0.1)
+	{
+		currentLevel->blocks.push_back(new Platform(i, -0.9, 0.05, g_stoneBlockTex, 0));
+		currentLevel->blocks.push_back(new Platform(i, -1.0, 0.05, g_ground, 0));
+	}
 
-	currentLevel->blocks.push_back(new Platform(3.4, -0.1, 0.05, g_ground, 0));
-	currentLevel->blocks.push_back(new Platform(3.5, -0.1, 0.05, g_ground, 0));
-	currentLevel->blocks.push_back(new Platform(3.6, -0.1, 0.05, g_ground, 0));
-	currentLevel->blocks.push_back(new Platform(3.7, -0.1, 0.05, g_ground, 0));
-	currentLevel->blocks.push_back(new Platform(3.8, -0.1, 0.05, g_ground, 0));
-	currentLevel->blocks.push_back(new Platform(3.9, -0.1, 0.05, g_ground, 0));
-	currentLevel->blocks.push_back(new Platform(4.0, -0.1, 0.05, g_ground, 0));
-	currentLevel->blocks.push_back(new Platform(4.1, -0.1, 0.05, g_ground, 0));
-	currentLevel->blocks.push_back(new Platform(4.2, -0.1, 0.05, g_ground, 0));
-	currentLevel->blocks.push_back(new Platform(4.3, -0.1, 0.05, g_ground, 0));
+	//floating platforms
+	for (float i = 0.4; i <= 2.0; i += 0.1)
+	{
+		currentLevel->blocks.push_back(new Platform(i, -0.6, 0.05, g_stoneBlockTex, 0));
+	}
 
-	currentLevel->blocks.push_back(new Platform(4.5, -0.7, 0.05, g_ground, 1));
-	currentLevel->blocks.push_back(new Platform(4.6, -0.7, 0.05, g_ground, 1));
-	currentLevel->blocks.push_back(new Platform(4.7, -0.7, 0.05, g_ground, 1));
-	currentLevel->blocks.push_back(new Platform(4.8, -0.7, 0.05, g_ground, 1));
-	currentLevel->blocks.push_back(new Platform(4.9, -0.7, 0.05, g_ground, 1));
-	currentLevel->blocks.push_back(new Platform(5.0, -0.7, 0.05, g_ground, 1));
-	currentLevel->blocks.push_back(new Platform(5.1, -0.7, 0.05, g_ground, 1));
+	//roadblock
+	for (float i = -0.8; i <= -0.3; i += 0.1)
+	{
+		currentLevel->blocks.push_back(new Platform(2.0, i, 0.05, g_stoneWall2, 0));
+		currentLevel->blocks.push_back(new Platform(2.1, i, 0.05, g_ground, 0));
+		currentLevel->blocks.push_back(new Platform(2.2, i, 0.05, g_ground, 0));
+		currentLevel->blocks.push_back(new Platform(2.3, i, 0.05, g_stoneWall, 0));
 
-	currentLevel->blocks.push_back(new Platform(5.4, -0.4, 0.05, g_ground, 0));
-	currentLevel->blocks.push_back(new Platform(5.4, 0.1, 0.05, g_ground, 1));
-	currentLevel->blocks.push_back(new Platform(5.4, 0.6, 0.05, g_ground, 1));
-	currentLevel->blocks.push_back(new Platform(5.8, -0.2, 0.05, g_ground, 1));
-	currentLevel->blocks.push_back(new Platform(5.8, 0.3, 0.05, g_ground, 0));
-	currentLevel->blocks.push_back(new Platform(5.8, 0.8, 0.05, g_ground, 1));
-	currentLevel->blocks.push_back(new Platform(6.2, -0.4, 0.05, g_ground, 1));
-	currentLevel->blocks.push_back(new Platform(6.2, 0.1, 0.05, g_ground, 0));
-	currentLevel->blocks.push_back(new Platform(6.2, 0.6, 0.05, g_ground, 1));
-	currentLevel->blocks.push_back(new Platform(6.6, -0.2, 0.05, g_ground, 1));
-	currentLevel->blocks.push_back(new Platform(6.6, 0.3, 0.05, g_ground, 1));
-	currentLevel->blocks.push_back(new Platform(6.6, 0.8, 0.05, g_ground, 0));
+		//details on top 
+		currentLevel->blocks.push_back(new Platform(2.0, -0.3, 0.05, g_corner, 0));
+		currentLevel->blocks.push_back(new Platform(2.1, -0.3, 0.05, g_stoneBlockTex, 0));
+		currentLevel->blocks.push_back(new Platform(2.2, -0.3, 0.05, g_stoneBlockTex, 0));
+		currentLevel->blocks.push_back(new Platform(2.3, -0.3, 0.05, g_corner2, 0));
+	}
 
-	currentLevel->blocks.push_back(new Platform(7.0, 0.7, 0.05, g_corner, 0));
-	currentLevel->blocks.push_back(new Platform(7.1, 0.7, 0.05, g_stoneBlockTex, 0));
-	currentLevel->blocks.push_back(new Platform(7.2, 0.7, 0.05, g_stoneBlockTex, 0));
-	currentLevel->blocks.push_back(new Platform(7.3, 0.7, 0.05, g_stoneBlockTex, 0));
-	currentLevel->blocks.push_back(new Platform(7.4, 0.7, 0.05, g_stoneBlockTex, 0));
-	currentLevel->blocks.push_back(new Platform(7.5, 0.7, 0.05, g_stoneBlockTex, 0));
-	currentLevel->blocks.push_back(new Platform(7.6, 0.7, 0.05, g_stoneBlockTex, 0));
-	currentLevel->blocks.push_back(new Platform(7.7, 0.7, 0.05, g_corner2, 0));
 
-	currentLevel->blocks.push_back(new Platform(7.0, 0.6, 0.05, g_ground, 0));
-	currentLevel->blocks.push_back(new Platform(7.1, 0.6, 0.05, g_ground, 0));
-	currentLevel->blocks.push_back(new Platform(7.2, 0.6, 0.05, g_ground, 0));
-	currentLevel->blocks.push_back(new Platform(7.3, 0.6, 0.05, g_ground, 0));
-	currentLevel->blocks.push_back(new Platform(7.4, 0.6, 0.05, g_ground, 0));
-	currentLevel->blocks.push_back(new Platform(7.5, 0.6, 0.05, g_ground, 0));
-	currentLevel->blocks.push_back(new Platform(7.6, 0.6, 0.05, g_ground, 0));
-	currentLevel->blocks.push_back(new Platform(7.7, 0.6, 0.05, g_ground, 0));
+	//jump blocks
+	currentLevel->blocks.push_back(new Platform(2.6, 0.0, 0.05, g_stoneBlockTex, 1));
+	currentLevel->blocks.push_back(new Platform(2.7, 0.0, 0.05, g_stoneBlockTex, 1));
 
-	currentLevel->doors.push_back(new Door(7.4, 0.8, 0.05, g_corner));
+	currentLevel->blocks.push_back(new Platform(3.1, 0.3, 0.05, g_stoneBlockTex, 1));
+	currentLevel->blocks.push_back(new Platform(3.2, 0.3, 0.05, g_stoneBlockTex, 1));
 
+	currentLevel->blocks.push_back(new Platform(3.6, 0.6, 0.05, g_stoneBlockTex, 1));
+	currentLevel->blocks.push_back(new Platform(3.7, 0.6, 0.05, g_stoneBlockTex, 1));
+
+	//floating platform
+	for (float i = 4.2; i < 5.4; i += 0.1)
+	{
+		currentLevel->blocks.push_back(new Platform(i, 0.7, 0.05, g_stoneBlockTex, 1));
+	}
+
+	for (float i = 5.5; i < 7.5; i += 0.1)
+	{
+		currentLevel->blocks.push_back(new Platform(i, 0.7, 0.05, g_stoneBlockTex, 0));
+	}
+
+	//platform before jump fest
+	for(float i = -1.0; i < -0.7; i += 0.1)
+	{
+		currentLevel->blocks.push_back(new Platform(4.7, i, 0.05, g_ground, 0));
+	}
+
+	currentLevel->blocks.push_back(new Platform(4.6, -1.0, 0.05, g_ground, 0));
+	currentLevel->blocks.push_back(new Platform(4.6,-0.9, 0.05, g_ground, 0));
+	currentLevel->blocks.push_back(new Platform(4.6,-0.8, 0.05, g_stoneWall2, 0));
+	currentLevel->blocks.push_back(new Platform(4.6,-0.7, 0.05, g_corner, 0));
+	currentLevel->blocks.push_back(new Platform(4.7, -0.7, 0.05, g_stoneBlockTex, 0));
+	currentLevel->blocks.push_back(new Platform(4.8, -0.6, 0.05, g_corner, 0));
+	currentLevel->blocks.push_back(new Platform(4.9, -0.6, 0.05, g_stoneBlockTex, 0));
+	currentLevel->blocks.push_back(new Platform(5.0, -0.5, 0.05, g_corner, 0));
+	currentLevel->blocks.push_back(new Platform(5.1, -0.5, 0.05, g_corner2, 0));
+
+	
+	for (float i = -1.0; i < -0.6; i += 0.1)
+	{
+		currentLevel->blocks.push_back(new Platform(4.8, i, 0.05, g_ground, 0));
+		currentLevel->blocks.push_back(new Platform(4.9, i, 0.05, g_ground, 0));
+	}
+	for (float i = -1.0; i < -0.5; i += 0.1)
+	{
+		currentLevel->blocks.push_back(new Platform(5.0, i, 0.05, g_ground, 0));
+		currentLevel->blocks.push_back(new Platform(5.1, i, 0.05, g_stoneWall, 0));
+	}
+
+	//jump fest
+	currentLevel->blocks.push_back(new Platform(5.7, -1.0, 0.05, g_ground, 1));
+	currentLevel->blocks.push_back(new Platform(5.7, -0.5, 0.05, g_ground, 1));
+	currentLevel->blocks.push_back(new Platform(5.7, 0.0, 0.05, g_ground, 0));
+
+	currentLevel->blocks.push_back(new Platform(6.1, -0.8, 0.05, g_ground, 1));
+	currentLevel->blocks.push_back(new Platform(6.1, -0.3, 0.05, g_ground, 1));
+
+	currentLevel->blocks.push_back(new Platform(6.5, -1.0, 0.05, g_ground, 0));
+	currentLevel->blocks.push_back(new Platform(6.5, -0.5, 0.05, g_ground, 1));
+	currentLevel->blocks.push_back(new Platform(6.5, 0.0, 0.05, g_ground, 1));
+
+	currentLevel->blocks.push_back(new Platform(6.9, -0.8, 0.05, g_ground, 0));
+	currentLevel->blocks.push_back(new Platform(6.9, -0.3, 0.05, g_ground, 1));
+
+	currentLevel->blocks.push_back(new Platform(7.3, -1.0, 0.05, g_ground, 1));
+	currentLevel->blocks.push_back(new Platform(7.3, -0.5, 0.05, g_ground, 1));
+	currentLevel->blocks.push_back(new Platform(7.3, 0.0, 0.05, g_ground, 0));
+
+	for (float i = 7.8; i < 8.5; i += 0.1)
+	{
+		currentLevel->blocks.push_back(new Platform(i, 0.0, 0.05, g_ground, 0));
+	}
+	currentLevel->doors.push_back(new Door(8.0, 0.1, 0.05, g_checkPoint));
+	/*currentLevel->doors.push_back(new Door(7.4, 0.8, 0.05, g_corner));
+	currentLevel->doors.push_back(new Door(0.4, -0.5, 0.05, g_corner));*/
 }
 
 
