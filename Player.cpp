@@ -1,4 +1,5 @@
 #include "Player.h"
+#include <string>
 
 
 Player::Player(Level* cLevel) {
@@ -78,6 +79,12 @@ void Player::update(long elapsed_microseconds) {
 	// Time since last frame, always multiply by this
 	// when moving the player
 	float dt = elapsed_microseconds / 10000.0;
+
+
+	std::wstring testing = std::to_wstring(dt);
+	testing += L"\n";
+	OutputDebugString(testing.c_str());
+
 
 	if (a_down) {
 		xVel = -speed;
@@ -163,7 +170,7 @@ void Player::update(long elapsed_microseconds) {
 			this->initialY = block->yPos + 0.1;
 
 			// Move the player back to his original position:
-			currentLevel->offset = block->xPos + 0.2;
+			currentLevel->offset = currentLevel->levelPosition;
 
 			OutputDebugStringW(L"Checkpoint reached.\n");
 		}
@@ -171,7 +178,7 @@ void Player::update(long elapsed_microseconds) {
 
 	// Smooth out walking on falling blocks.
 	if (hitGround == true) {
-		rect->y += 0.02 * dt;
+		rect->y += 0.02 * 0.12;
 	}
 
 	// If the player is not against the wall, move the platforms
@@ -197,8 +204,8 @@ void Player::update(long elapsed_microseconds) {
 		this->rect->x = this->initialX;
 		this->rect->y = this->initialY;
 
-		// Move the player back to his original position:
-		currentLevel->levelPosChange = -currentLevel->levelPosition - currentLevel->offset;
+		// Move the player back to his original position (-levelPosition) and then add checkpoint (+offset):
+		currentLevel->levelPosChange = -currentLevel->levelPosition + currentLevel->offset;
 		
 		//PostQuitMessage(0);
 	}
