@@ -22,6 +22,9 @@
     <ClCompile Include="Door.cpp">
       <Filter>cpp</Filter>
     </ClCompile>
+    <ClCompile Include="Spike.cpp">
+      <Filter>cpp</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="STRUCTS.h">
@@ -49,6 +52,9 @@
       <Filter>headers</Filter>
     </ClInclude>
     <ClInclude Include="Door.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Spike.h">
       <Filter>headers</Filter>
     </ClInclude>
   </ItemGroup>

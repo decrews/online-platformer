@@ -176,7 +176,7 @@ void Player::update(long elapsed_microseconds) {
 
 	// Smooth out walking on falling blocks.
 	if (hitGround == true) {
-		rect->y += 0.02 * 0.12;
+		rect->y += 0.02 * 0.3;
 	}
 
 	// If the player is not against the wall, move the platforms

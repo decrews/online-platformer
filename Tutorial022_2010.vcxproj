@@ -379,6 +379,7 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Rect.cpp" />
     <ClCompile Include="source.cpp" />
+    <ClCompile Include="Spike.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="shader.fx" />
@@ -392,6 +393,7 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="Rect.h" />
     <CLInclude Include="resource.h" />
+    <ClInclude Include="Spike.h" />
     <ClInclude Include="STRUCTS.h" />
     <ResourceCompile Include="homework2.rc" />
   </ItemGroup>
