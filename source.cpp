@@ -850,8 +850,8 @@ void Render()
 	long elapsed = stopwatch.elapse_micro();
 	stopwatch.start(); //restart
 
-	currentLevel->update(elapsed);
 	player->update(elapsed);
+	currentLevel->update(elapsed);
 
 	// Setup vertex buffer parameters
 	UINT stride = sizeof(SimpleVertex);
