@@ -856,9 +856,94 @@ void InitGame() {
 	{
 		currentLevel->blocks.push_back(new Platform(i, 0.0, 0.05, g_ground, 0));
 	}
+
+	//first check point
 	currentLevel->doors.push_back(new Door(8.0, 0.1, 0.05, g_checkPoint));
 
-	currentLevel->spikes.push_back(new Spike(0.5, -0.5, 0.05, g_spike4, 0));
+	//currentLevel->blocks.push_back(new Platform(8.9, -0.5, 0.05, g_ground, 0));
+	//currentLevel->blocks.push_back(new Platform(9.0, -0.6, 0.05, g_ground, 0));
+	//currentLevel->blocks.push_back(new Platform(9.1, -0.7, 0.05, g_ground, 0));
+	//currentLevel->blocks.push_back(new Platform(9.2, -0.8, 0.05, g_ground, 0));
+
+
+	//lower stairs after checkpoint
+	currentLevel->blocks.push_back(new Platform(8.5, -0.1, 0.05, g_ground, 0));
+	currentLevel->blocks.push_back(new Platform(8.6, -0.2, 0.05, g_ground, 0));
+	currentLevel->blocks.push_back(new Platform(8.7, -0.3, 0.05, g_ground, 0));
+
+	for (float i = 9.3; i < 18.0; i += 0.1)
+	{
+		currentLevel->blocks.push_back(new Platform(i, 0.0, 0.05, g_ground, 0));
+	}
+
+	for (float i = 8.8; i <= 10.2; i += 0.1)
+	{
+		currentLevel->blocks.push_back(new Platform(i, -0.4, 0.05, g_ground, 0));
+	}
+
+	currentLevel->blocks.push_back(new Platform(10.2, -0.4, 0.05, g_ground, 1));
+	currentLevel->blocks.push_back(new Platform(10.3, -0.4, 0.05, g_ground, 1));
+	currentLevel->blocks.push_back(new Platform(10.4, -0.4, 0.05, g_ground, 1));
+	currentLevel->blocks.push_back(new Platform(10.5, -0.4, 0.05, g_ground, 1));
+	currentLevel->blocks.push_back(new Platform(10.6, -0.4, 0.05, g_ground, 1));
+	currentLevel->blocks.push_back(new Platform(10.7, -0.4, 0.05, g_ground, 1));
+	currentLevel->blocks.push_back(new Platform(10.8, -0.4, 0.05, g_ground, 1));
+
+	currentLevel->blocks.push_back(new Platform(10.9, -0.4, 0.05, g_ground, 0));
+	currentLevel->blocks.push_back(new Platform(11.0, -0.4, 0.05, g_ground, 0));
+	currentLevel->blocks.push_back(new Platform(11.0, -0.3, 0.05, g_ground, 0));
+	currentLevel->blocks.push_back(new Platform(11.0, -0.2, 0.05, g_ground, 0));
+	currentLevel->blocks.push_back(new Platform(11.0, -0.1, 0.05, g_ground, 0));
+	currentLevel->blocks.push_back(new Platform(11.0, 0.0, 0.05, g_ground, 0));
+
+	for (float i = -1.0; i < -0.4; i += 0.1)
+	{
+		currentLevel->blocks.push_back(new Platform(10.0, i, 0.05, g_ground, 0));
+	}
+
+	currentLevel->blocks.push_back(new Platform(11.1, -0.4, 0.05, g_ground, 0));
+	currentLevel->blocks.push_back(new Platform(11.1, -0.1, 0.05, g_ground, 0));
+	currentLevel->spikes.push_back(new Spike(11.1, -0.2, 0.05, g_spike3, 0));
+	currentLevel->spikes.push_back(new Spike(11.1, -0.3, 0.05, g_spike3, 0));
+
+	for (float i = 11.2; i < 13.0; i += 0.1)
+	{
+		currentLevel->spikes.push_back(new Spike(i, -0.1, 0.05, g_spike4, 0));
+	}
+
+	//bottom spike layer
+	for (float i = 10.5; i <= 20.0; i += 0.1)
+	{
+		currentLevel->spikes.push_back(new Spike(i, -1.0, 0.05, g_spike, 0));
+	}
+
+	currentLevel->blocks.push_back(new Platform(10.1, -1.0, 0.05, g_ground, 0));
+
+	for (float i = -0.9; i < -0.4; i += 0.1)
+	{
+		currentLevel->spikes.push_back(new Spike(10.1, i, 0.05, g_spike3, 0));
+	}
+	currentLevel->spikes.push_back(new Spike(10.2, -1.0, 0.05, g_spike, 0));
+	currentLevel->spikes.push_back(new Spike(10.3, -1.0, 0.05, g_spike, 0));
+	currentLevel->spikes.push_back(new Spike(10.4, -1.0, 0.05, g_spike, 0));
+
+	currentLevel->blocks.push_back(new Platform(10.5, -0.9, 0.05, g_ground, 1));
+	currentLevel->blocks.push_back(new Platform(10.6, -0.9, 0.05, g_ground, 1));
+	currentLevel->blocks.push_back(new Platform(10.7, -0.9, 0.05, g_ground, 1));
+	currentLevel->blocks.push_back(new Platform(10.8, -0.9, 0.05, g_ground, 1));
+	currentLevel->blocks.push_back(new Platform(10.9, -0.9, 0.05, g_ground, 1));
+	currentLevel->blocks.push_back(new Platform(11.0, -0.9, 0.05, g_ground, 1));
+
+	currentLevel->blocks.push_back(new Platform(11.4, -0.7, 0.05, g_ground, 0));
+	currentLevel->blocks.push_back(new Platform(11.5, -0.7, 0.05, g_ground, 0));
+
+	//lower ground below spikes
+	for (float i = 10.0; i <= 20.0; i += 0.1)
+	{
+		currentLevel->blocks.push_back(new Platform(i, -1.1, 0.05, g_ground, 0));
+	}
+
+	//currentLevel->spikes.push_back(new Spike(0.5, -0.5, 0.05, g_spike4, 0));
 	/*currentLevel->doors.push_back(new Door(7.4, 0.8, 0.05, g_corner));
 	currentLevel->doors.push_back(new Door(0.4, -0.5, 0.05, g_corner));*/
 }
