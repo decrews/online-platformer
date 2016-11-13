@@ -168,20 +168,25 @@ void Player::update(long elapsed_microseconds) {
 			this->initialX = block->xPos;
 			this->initialY = block->yPos + 0.1;
 
-			// Move the player back to his original position:
 			currentLevel->offset = currentLevel->levelPosition;
 			OutputDebugStringW(L"Checkpoint reached.\n");
 		}
 	}
 
-	//hit spikes
-	for (Spike* block : currentLevel->spikes)
-	{
-		if (wallCheck(block->rect))
-		{
-			OutputDebugStringW(L"Ouch!.\n");
-		}
-	}
+	////hit spikes
+	//for (Spike* block : currentLevel->spikes)
+	//{
+	//	if (groundCheck(block->rect))
+	//	{
+	//		// Reset player's position on the screen
+	//		this->rect->x = this->initialX;
+	//		this->rect->y = this->initialY;
+
+	//		// Move the player back to his original position (-levelPosition) and then add checkpoint (+offset):
+	//		currentLevel->levelPosChange = currentLevel->levelPosition - currentLevel->offset;
+	//		OutputDebugStringW(L"Ouch!.\n");
+	//	}
+	//}
 
 	// Smooth out walking on falling blocks.
 	if (hitGround == true) {
@@ -212,7 +217,7 @@ void Player::update(long elapsed_microseconds) {
 		this->rect->y = this->initialY;
 
 		// Move the player back to his original position (-levelPosition) and then add checkpoint (+offset):
-		currentLevel->levelPosChange = -currentLevel->levelPosition + currentLevel->offset;
+		currentLevel->levelPosChange = -currentLevel->levelPosition - currentLevel->offset;
 	}
 }
 

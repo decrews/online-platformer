@@ -49,6 +49,9 @@ ID3D11ShaderResourceView*           g_corner = NULL;
 ID3D11ShaderResourceView*           g_corner2 = NULL;
 ID3D11ShaderResourceView*           g_checkPoint = NULL;
 ID3D11ShaderResourceView*           g_spike = NULL;
+ID3D11ShaderResourceView*           g_spike2 = NULL;
+ID3D11ShaderResourceView*           g_spike3 = NULL;
+ID3D11ShaderResourceView*           g_spike4 = NULL;
 
 ID3D11SamplerState*                 g_Sampler = NULL;
 ID3D11BlendState*					g_BlendState;
@@ -461,6 +464,18 @@ HRESULT InitDevice()
 	if (FAILED(hr))
 		return hr;
 
+	hr = D3DX11CreateShaderResourceViewFromFile(g_pd3dDevice, L"SpikeLeft.png", NULL, NULL, &g_spike2, NULL);
+	if (FAILED(hr))
+		return hr;
+
+	hr = D3DX11CreateShaderResourceViewFromFile(g_pd3dDevice, L"SpikeRight.png", NULL, NULL, &g_spike3, NULL);
+	if (FAILED(hr))
+		return hr;
+
+	hr = D3DX11CreateShaderResourceViewFromFile(g_pd3dDevice, L"SpikeDown.png", NULL, NULL, &g_spike4, NULL);
+	if (FAILED(hr))
+		return hr;
+
 	// Create the sample state
 	D3D11_SAMPLER_DESC sampDesc;
 	ZeroMemory(&sampDesc, sizeof(sampDesc));
@@ -843,7 +858,7 @@ void InitGame() {
 	}
 	currentLevel->doors.push_back(new Door(8.0, 0.1, 0.05, g_checkPoint));
 
-	currentLevel->spikes.push_back(new Spike(0.7, -0.5, 0.05, g_spike, 0));
+	currentLevel->spikes.push_back(new Spike(0.5, -0.5, 0.05, g_spike4, 0));
 	/*currentLevel->doors.push_back(new Door(7.4, 0.8, 0.05, g_corner));
 	currentLevel->doors.push_back(new Door(0.4, -0.5, 0.05, g_corner));*/
 }
