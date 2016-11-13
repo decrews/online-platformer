@@ -174,6 +174,15 @@ void Player::update(long elapsed_microseconds) {
 		}
 	}
 
+	//hit spikes
+	for (Spike* block : currentLevel->spikes)
+	{
+		if (wallCheck(block->rect))
+		{
+			OutputDebugStringW(L"Ouch!.\n");
+		}
+	}
+
 	// Smooth out walking on falling blocks.
 	if (hitGround == true) {
 		rect->y += 0.02 * 0.3;

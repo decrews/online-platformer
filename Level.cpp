@@ -157,6 +157,11 @@ void Level::update(long elapsed_microseconds) {
 	for (auto door : doors) {
 		door->xPos -= levelPosChange;
 		door->rect->x -= levelPosChange;
+	}
+
+	for (auto Spike : spikes) {
+		Spike->xPos -= levelPosChange;
+		Spike->rect->x -= levelPosChange;
 
 	}
 
