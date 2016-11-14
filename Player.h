@@ -10,6 +10,7 @@ public:
 	bool groundCheck(Rect* rect);
 	bool headCheck(Rect* rect);
 	bool wallCheck(Rect* rect);
+	bool alive = true;
 	void movePlayer(float x, float y);
 	void update(long elapsed_microseconds);
 	void draw(VS_CONSTANT_BUFFER* cbuffer, ID3D11DeviceContext* gcontext,

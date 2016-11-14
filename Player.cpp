@@ -178,6 +178,7 @@ void Player::update(long elapsed_microseconds) {
 	{
 		if (groundCheck(block->rect))
 		{
+			//alive = false;
 			OutputDebugStringW(L"Ouch!.\n");
 		}
 	}
@@ -212,6 +213,7 @@ void Player::update(long elapsed_microseconds) {
 
 		// Move the player back to his original position (-levelPosition) and then add checkpoint (+offset):
 		currentLevel->levelPosChange = -currentLevel->levelPosition - currentLevel->offset;
+		//alive = true;
 	}
 }
 
