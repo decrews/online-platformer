@@ -27,7 +27,7 @@ public:
 	std::vector<Spike*> spikes;
 	float levelPosChange = 0;
 	float levelPosition = 0;
-	float offset = 0.6;
+	float offsetX = 0.6;
 	float worldPos = 0;
 	float gravity = 0.0005;
 };

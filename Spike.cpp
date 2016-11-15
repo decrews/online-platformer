@@ -3,8 +3,8 @@
 Spike::Spike(float x, float y, float s, ID3D11ShaderResourceView* t, int tp) {
 	type = tp;
 
-	height = 4 * s;
-	width = 4 * s;
+	height = 3 * s;
+	width = 3 * s;
 
 	xPos = x;
 	yPos = y;

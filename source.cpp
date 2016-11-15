@@ -461,6 +461,10 @@ HRESULT InitDevice()
 	if (FAILED(hr))
 		return hr;
 
+	hr = D3DX11CreateShaderResourceViewFromFile(g_pd3dDevice, L"Flag.png", NULL, NULL, &g_checkPoint, NULL);
+	if (FAILED(hr))
+		return hr;
+
 	hr = D3DX11CreateShaderResourceViewFromFile(g_pd3dDevice, L"Spike.png", NULL, NULL, &g_spike, NULL);
 	if (FAILED(hr))
 		return hr;
@@ -630,7 +634,16 @@ void OnKeyUp(HWND hwnd, UINT vk, BOOL fDown, int cRepeat, UINT flags)
 	case 32: //space
 		player->w_down = false;
 		break;
-	default:
+	case 75: //k
+		if (VsConstData->extra == 0) {
+			VsConstData->extra = 1;
+		}
+		else {
+			VsConstData->extra = 0;;
+		}
+		break;
+	
+default			:
 		break;
 	}
 }
@@ -861,7 +874,7 @@ void InitGame() {
 	}
 
 	//first check point
-	currentLevel->doors.push_back(new Door(10.0, -0.3, 0.05, g_checkPoint));
+	currentLevel->doors.push_back(new Door(10.0, -0.26, 0.09, g_checkPoint));
 
 	//lower stairs after checkpoint
 	currentLevel->blocks.push_back(new Platform(8.9, 0.3, 0.05, g_ground, 1));
@@ -1005,8 +1018,8 @@ void InitGame() {
 	}
 
 	//second check point
-	currentLevel->doors.push_back(new Door(14.5, 0.2, 0.05, g_checkPoint));
-	currentLevel->doors.push_back(new Door(9.4, 0.1, 0.05, g_checkPoint));
+	currentLevel->doors.push_back(new Door(14.5, 0.24, 0.09, g_checkPoint));
+	currentLevel->doors.push_back(new Door(9.4, 0.14, 0.09, g_checkPoint));
 
 	//upper level
 	//for (float i = 9.3; i < 13.0; i += 0.1)
@@ -1074,6 +1087,10 @@ void InitGame() {
 		currentLevel->spikes.push_back(new Spike(i, 0.09, 0.05, g_spike, 0));
 	}
 
+	// Testing spike scaling
+	for (Spike* spk : currentLevel->spikes) {
+		spk->scale = 0.045;
+	}
 
 	/*currentLevel->spikes.push_back(new Spike(12.9, -0.2, 0.05, g_spike2, 0));
 	currentLevel->spikes.push_back(new Spike(12.9, -0.2, 0.05, g_spike2, 0));*/

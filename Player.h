@@ -40,7 +40,7 @@ public:
 	float adjustedWidth = 1 / totalSpriteColumns;
 	float currentFrameRow = 0;
 	float currentFrameColumn = 0;
-	float scaledSpriteHeight = 48 / 480;
+	float scaledSpriteHeight = 48 / 600;
 	float scaledSpriteWidth = 32 / 600;
 
 	ID3D11ShaderResourceView* tex;

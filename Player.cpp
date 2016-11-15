@@ -27,8 +27,8 @@ bool Player::groundCheck(Rect* rect) {
 	if (this->rect->collides(rect)) {
 		float diff = this->rect->y - (rect->y + rect->height / 2);
 		if (diff < rect->height
-			&& this->rect->x - (this->rect->width / 100) > rect->x - (rect->width / 2)
-			&& this->rect->x + (this->rect->width / 100) < rect->x + (rect->width / 2)) {
+			&& this->rect->x - (this->rect->width / 75) > rect->x - (rect->width / 2)
+			&& this->rect->x + (this->rect->width / 75) < rect->x + (rect->width / 2)) {
 			return true;
 		}
 		else {
@@ -166,9 +166,9 @@ void Player::update(long elapsed_microseconds) {
 		if (wallCheck(block->rect))
 		{
 			this->initialX = block->xPos;
-			this->initialY = block->yPos + 0.3;
+			this->initialY = block->yPos + 0.1;
 
-			currentLevel->offset = currentLevel->levelPosition;
+			currentLevel->offsetX = currentLevel->levelPosition;
 			OutputDebugStringW(L"Checkpoint reached.\n");
 		}
 	}
@@ -202,7 +202,7 @@ void Player::update(long elapsed_microseconds) {
 		this->rect->y = this->initialY;
 
 		// Move the player back to his original position (-levelPosition) and then add checkpoint (+offset):
-		currentLevel->levelPosChange = -currentLevel->levelPosition + currentLevel->offset;
+		currentLevel->levelPosChange = -currentLevel->levelPosition + currentLevel->offsetX;
 		//alive = true;
 	}
 
@@ -213,13 +213,12 @@ void Player::update(long elapsed_microseconds) {
 		{
 			//alive = false;
 			// Reset player's position on the screen
-			//this->rect->x = this->initialX;
-			//this->rect->y = this->initialY;
-			//yVel = 0;
-			//xVel = 0;
+			this->rect->y = this->initialY;
+			yVel = 0;
+			xVel = 0;
 
-			//// Move the player back to his original position (-levelPosition) and then add checkpoint (+offset):
-			//currentLevel->levelPosChange = -currentLevel->levelPosition + currentLevel->offset;
+			// Move the player back to his original position (-levelPosition) and then add checkpoint (+offset):
+			currentLevel->levelPosChange = -currentLevel->levelPosition + currentLevel->offsetX;
 			OutputDebugStringW(L"Ouch!.\n");
 		}
 	}
