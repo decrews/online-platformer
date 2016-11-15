@@ -166,20 +166,10 @@ void Player::update(long elapsed_microseconds) {
 		if (wallCheck(block->rect))
 		{
 			this->initialX = block->xPos;
-			this->initialY = block->yPos + 0.1;
+			this->initialY = block->yPos + 0.3;
 
 			currentLevel->offset = currentLevel->levelPosition;
 			OutputDebugStringW(L"Checkpoint reached.\n");
-		}
-	}
-
-	//hit spikes
-	for (Spike* block : currentLevel->spikes)
-	{
-		if (groundCheck(block->rect))
-		{
-			//alive = false;
-			OutputDebugStringW(L"Ouch!.\n");
 		}
 	}
 
@@ -212,8 +202,26 @@ void Player::update(long elapsed_microseconds) {
 		this->rect->y = this->initialY;
 
 		// Move the player back to his original position (-levelPosition) and then add checkpoint (+offset):
-		currentLevel->levelPosChange = -currentLevel->levelPosition - currentLevel->offset;
+		currentLevel->levelPosChange = -currentLevel->levelPosition + currentLevel->offset;
 		//alive = true;
+	}
+
+	//hit spikes
+	for (Spike* block : currentLevel->spikes)
+	{
+		if (groundCheck(block->rect))
+		{
+			//alive = false;
+			// Reset player's position on the screen
+			//this->rect->x = this->initialX;
+			//this->rect->y = this->initialY;
+			//yVel = 0;
+			//xVel = 0;
+
+			//// Move the player back to his original position (-levelPosition) and then add checkpoint (+offset):
+			//currentLevel->levelPosChange = -currentLevel->levelPosition + currentLevel->offset;
+			OutputDebugStringW(L"Ouch!.\n");
+		}
 	}
 }
 
