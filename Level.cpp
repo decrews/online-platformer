@@ -24,7 +24,8 @@ void Level::draw(VS_CONSTANT_BUFFER* cbuffer, ID3D11DeviceContext* gcontext,
 	cbuffer->y = 0;
 
 	// Scale
-	cbuffer->scale = 2;
+	cbuffer->scaleX = 2;
+	cbuffer->scaleY = 2;
 
 	// Setting constants, pixel, and vertex shader.
 	gcontext->UpdateSubresource(constBuffer, 0, 0, cbuffer, 0, 0);
@@ -55,7 +56,8 @@ void Level::draw(VS_CONSTANT_BUFFER* cbuffer, ID3D11DeviceContext* gcontext,
 			cbuffer->y = curPlatform->yPos;
 
 			// Scale
-			cbuffer->scale = curPlatform->scale;
+			cbuffer->scaleX = curPlatform->scale;
+			cbuffer->scaleY = curPlatform->scale;
 
 			// Setting constants, pixel, and vertex shader.
 			gcontext->UpdateSubresource(constBuffer, 0, 0, cbuffer, 0, 0);
@@ -86,7 +88,8 @@ void Level::draw(VS_CONSTANT_BUFFER* cbuffer, ID3D11DeviceContext* gcontext,
 				cbuffer->y = curDoor->yPos;
 
 				// Scale
-				cbuffer->scale = curDoor->scale;
+				cbuffer->scaleX = curDoor->scale;
+				cbuffer->scaleY = curDoor->scale;
 
 				// Setting constants, pixel, and vertex shader.
 				gcontext->UpdateSubresource(constBuffer, 0, 0, cbuffer, 0, 0);
@@ -115,7 +118,8 @@ void Level::draw(VS_CONSTANT_BUFFER* cbuffer, ID3D11DeviceContext* gcontext,
 					cbuffer->y = curSpike->yPos;
 
 					// Scale
-					cbuffer->scale = curSpike->scale;
+					cbuffer->scaleX = curSpike->scale;
+					cbuffer->scaleY = curSpike->scale;
 
 					// Setting constants, pixel, and vertex shader.
 					gcontext->UpdateSubresource(constBuffer, 0, 0, cbuffer, 0, 0);
@@ -151,6 +155,13 @@ void Level::update(long elapsed_microseconds) {
 
 			block->yPos -= block->yVel * dt;
 			block->rect->y -= block->yVel * dt;
+		}
+
+		if (block->yPos < -10) {
+			block->yPos = block->originY;
+			block->rect->y = block->originY;
+			block->falling = false;
+			block->yVel = 0;
 		}
 	}
 

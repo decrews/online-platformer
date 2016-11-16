@@ -175,7 +175,7 @@ void Player::update(long elapsed_microseconds) {
 
 	// Smooth out walking on falling blocks.
 	if (hitGround == true) {
-		rect->y += 0.02 * 0.3;
+		rect->y += 0.004;
 	}
 
 	// If the player is not against the wall, move the platforms
@@ -242,7 +242,8 @@ void Player::draw(VS_CONSTANT_BUFFER* cbuffer, ID3D11DeviceContext* gcontext,
 	cbuffer->y = this->rect->y;
 
 	// Scale
-	cbuffer->scale = 1;
+	cbuffer->scaleX = 1;
+	cbuffer->scaleY = 1;
 
 	// Setting constants, pixel, and vertex shader.
 	gcontext->UpdateSubresource(constBuffer, 0, 0, cbuffer, 0, 0);

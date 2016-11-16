@@ -14,6 +14,8 @@ public:
 	
 	float xPos;
 	float yPos;
+	float originX;
+	float originY;
 	float xVel = 0;
 	float yVel = 0;
 

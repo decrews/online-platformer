@@ -55,7 +55,7 @@ public:
 	int jumpWindow = 0;
 	int jumpMax = 500; // The amount of time you can increase jump height
 
-	float speed = 0.007;
+	float speed = 0.008;
 	float jumpHeight = 0.018;
 	
 	float initialX = 0;

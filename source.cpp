@@ -65,6 +65,7 @@ VS_CONSTANT_BUFFER* VsConstData = new VS_CONSTANT_BUFFER();
 // Window Size;
 int screenWidth = 600;
 int screenHeight = 600;
+float screenRatio;
 
 Game* game = new Game();
 Level* currentLevel = new Level();
@@ -198,6 +199,8 @@ HRESULT CompileShaderFromFile( WCHAR* szFileName, LPCSTR szEntryPoint, LPCSTR sz
 //--------------------------------------------------------------------------------------
 HRESULT InitDevice()
 {
+	screenRatio = 800 / (float)1280;
+
     HRESULT hr = S_OK;
 
     RECT rc;
@@ -403,8 +406,16 @@ HRESULT InitDevice()
 	VsConstData->adjustedHeight = 0;
 	VsConstData->x = 0;
 	VsConstData->y = 0;
-	VsConstData->scale = 0;
+	VsConstData->scaleX = 0;
+	VsConstData->scaleY = 0;
 	VsConstData->extra = 0;
+	VsConstData->extraTwo = 0;
+	VsConstData->extraThree = 0;
+	VsConstData->extraFour = 0;
+	VsConstData->extraFive = 0;
+	VsConstData->extraSix = 0;
+	VsConstData->extraSeven = 0;
+	VsConstData->extraEight = 0;
 	
 	// Fill in a buffer description.
 	D3D11_BUFFER_DESC cbDesc;

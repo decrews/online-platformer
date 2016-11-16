@@ -9,6 +9,10 @@ Platform::Platform(float x, float y, float s, ID3D11ShaderResourceView* t, int t
 
 	xPos = x;
 	yPos = y;
+
+	originX = x;
+	originY = y;
+
 	tex = t;
 	scale = s;
 	rect = new Rect(width, height, x, y);

@@ -1,4 +1,3 @@
-
 #pragma once
 #include <D3D11.h>
 #include "Rect.h"
@@ -21,6 +20,7 @@ public:
 	float height;
 	float width;
 	float scale;
+	float rotation;
 	Rect* rect;
 	ID3D11ShaderResourceView* tex;
 };

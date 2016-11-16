@@ -7,6 +7,14 @@ struct VS_CONSTANT_BUFFER
 	float adjustedHeight;
 	float x;
 	float y;
-	float scale;
+	float scaleX;
+	float scaleY;
 	float extra;
+	float extraTwo;
+	float extraThree;
+	float extraFour;
+	float extraFive;
+	float extraSix;
+	float extraSeven;
+	float extraEight;
 };

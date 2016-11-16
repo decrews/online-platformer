@@ -9,14 +9,22 @@ SamplerState samLinear : register(s0);
 
 cbuffer VS_CONSTANT_BUFFER : register(b0)
 {	
-	float cb_a;
-	float cb_b;
-	float cb_c;
-	float cb_d;
-	float cb_e;
-	float cb_f;
-	float cb_g;
-	float cb_h;
+	float currentFrameColumn;
+	float adjustedWidth;
+	float currentFrameRow;
+	float adjustedHeight;
+	float xLoc;
+	float yLoc;
+	float scaleX;
+	float scaleY;
+	float extra;
+	float extraTwo;
+	float extraThree;
+	float extraFour;
+	float extraFive;
+	float extraSix;
+	float extraSeven;
+	float extraEight;
 };
 
 struct VS_INPUT
@@ -40,16 +48,16 @@ PS_INPUT VS(VS_INPUT input)
 	
 	// Animation
 	output.Tex = input.Tex;
-	output.Tex.x = output.Tex.x += (cb_b * cb_a);
-	output.Tex.y = output.Tex.y += (cb_c * cb_d);
+	output.Tex.x = output.Tex.x += (adjustedWidth * currentFrameColumn);
+	output.Tex.y = output.Tex.y += (currentFrameRow * adjustedHeight);
 	
 	// Movement
 	output.Pos = input.Pos;
-	output.Pos.x *= cb_g;
-	output.Pos.y *= cb_g;
+	output.Pos.x *= scaleX;
+	output.Pos.y *= scaleY;
 
-	output.Pos.x = output.Pos.x += cb_e;
-	output.Pos.y = output.Pos.y += cb_f;
+	output.Pos.x = output.Pos.x += xLoc;
+	output.Pos.y = output.Pos.y += yLoc;
 
 	return output;
 }
@@ -61,7 +69,7 @@ float4 PS(PS_INPUT input) : SV_Target
 {
 	float2 texture_coordinates = input.Tex;
 	float4 color = txDiffuse.Sample(samLinear, texture_coordinates);
-	if (cb_h == 1) {
+	if (extra == 1) {
 		color = float4(1, 0, 0, 1);
 	}
 	return color;
