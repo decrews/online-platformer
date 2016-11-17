@@ -1,7 +1,11 @@
 //--------------------------------------------------------------------------------------
 // File: source.cpp
 //--------------------------------------------------------------------------------------
-#include "groundwork.h";
+#pragma comment(lib, "ws2_32.lib")
+#include <WinSock2.h>
+#include "groundwork.h"
+#include "Server.h"
+#include "Pawn.h"
 #include "Game.h"
 #include "Rect.h"
 #include "Player.h"
@@ -16,6 +20,12 @@ struct SimpleVertex
 {
 	XMFLOAT3 Pos;
 	XMFLOAT2 Tex;
+};
+
+struct sendMovement {
+	float x;
+	float y;
+	int plrId;
 };
 
 
@@ -52,11 +62,18 @@ ID3D11ShaderResourceView*           g_spike = NULL;
 ID3D11ShaderResourceView*           g_spike2 = NULL;
 ID3D11ShaderResourceView*           g_spike3 = NULL;
 ID3D11ShaderResourceView*           g_spike4 = NULL;
+ID3D11ShaderResourceView*           g_otherSprite = NULL;
 
 ID3D11SamplerState*                 g_Sampler = NULL;
 ID3D11BlendState*					g_BlendState;
 
 VS_CONSTANT_BUFFER* VsConstData = new VS_CONSTANT_BUFFER();
+
+SOCKET Connection;
+bool serverRunning = true;    // Enabled host - Single Player
+bool broadcastServer = false; // If server is enabled, broadcast or local?
+std::string Ip = "127.0.0.1"; // For client mode
+Server* gameServer = NULL;
 
 
 //--------------------------------------------------------------------------------------
@@ -65,12 +82,13 @@ VS_CONSTANT_BUFFER* VsConstData = new VS_CONSTANT_BUFFER();
 // Window Size;
 int screenWidth = 600;
 int screenHeight = 600;
-float screenRatio;
+float screenRatio = screenWidth/screenHeight;
 
 Game* game = new Game();
 Level* currentLevel = new Level();
-Level* test = new Level();
+//Level* test = new Level();
 Player* player = new Player(currentLevel);
+std::vector<Pawn*> pawns;
 
 
 //--------------------------------------------------------------------------------------
@@ -84,12 +102,110 @@ void Render();
 void InitGame();
 
 
+
+//--------------------------------------------------------------------------------------
+// Client Thread Function + Process Packet
+//--------------------------------------------------------------------------------------
+bool processPacket(Packet packetType) {
+	sendMovement pkt;
+
+	switch (packetType) {
+	case P_Movement:
+	{
+		recv(Connection, (char*)&pkt, sizeof(pkt), NULL);
+		if (pawns.size() > 0) {
+			for (int i = 0; i < pawns.size(); i++) {
+				if (pawns[i]->id == pkt.plrId) {
+					pawns[i]->xPos = pkt.x - currentLevel->levelPosition;
+					pawns[i]->yPos = pkt.y;
+					pawns[i]->rect->x = pkt.x - currentLevel->levelPosition;
+					pawns[i]->rect->y = pkt.y;
+				}
+				/*
+				// In the array, they have 0,1,2,3...
+				// the test packet coming in is 10
+				int testInt = test.plrId;
+				std::wstring test = std::to_wstring(testInt);
+				test += L"\n";
+				OutputDebugString(test.c_str());
+				*/
+			}
+		}
+
+
+		break;
+	}
+
+	case P_Connection:
+		int cntId;
+		recv(Connection, (char*)&cntId, sizeof(cntId), NULL);
+		pawns.push_back(new Pawn(0.5, 0.5, g_otherSprite, cntId));
+
+		OutputDebugString(L"New player connected.");
+		break;
+
+	default:
+		OutputDebugString(L"Unrecognized packet.");
+	}
+	return true;
+}
+
+void ClientThread() {
+	Packet packetType;
+	while (true) {
+		recv(Connection, (char*)&packetType, sizeof(Packet), NULL);
+		if (!processPacket(packetType)) {
+			break;
+		}
+	}
+}
+
+
+
 //--------------------------------------------------------------------------------------
 // Entry point to the program. Initializes everything and goes into a message processing 
 // loop. Idle time is used to render the scene.
 //--------------------------------------------------------------------------------------
 int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nCmdShow )
 {
+	if (serverRunning) {
+		gameServer = new Server(1111, broadcastServer);
+		gameServer->start();
+	}
+
+
+	// Client Starts
+	// --------------------------------
+	WSAData wsaData;
+	WORD DllVersion = MAKEWORD(2, 1);
+	if (WSAStartup(DllVersion, &wsaData) != 0) {
+		MessageBoxA(NULL, "Winsock startup failed", "Error", MB_OK | MB_ICONERROR);
+		exit(1);
+	}
+
+	SOCKADDR_IN addr; // Address that we will bind our listening socket to
+	int addrlen = sizeof(addr); // Length of the address (required for accept call)
+	addr.sin_addr.s_addr = inet_addr(Ip.c_str());
+	addr.sin_port = htons(1111);
+	addr.sin_family = AF_INET;
+
+	Connection = socket(AF_INET, SOCK_STREAM, NULL); // Set connection socket
+	if (connect(Connection, (SOCKADDR*)&addr, addrlen) != 0) { // If we are unable to connect
+		MessageBoxA(NULL, "Faied to Connect", "Error", MB_OK | MB_ICONERROR);
+		return 0; // Failed to connect;
+	}
+
+	std::cout << "Connected" << std::endl;
+	CreateThread(NULL, NULL, (LPTHREAD_START_ROUTINE)ClientThread, NULL, NULL, NULL); // Create thead to handle this client.  The index in the socket array for this thread is the value(i);
+																					  // Tell other players about connection:
+	Packet connectionPacket = P_Connection;
+	int cntId = 10;
+	send(Connection, (char*)&connectionPacket, sizeof(Packet), NULL); //Send test packet
+	send(Connection, (char*)&cntId, sizeof(cntId), NULL); //send movement data
+	// --------------------------------
+	// Client Ends
+
+
     UNREFERENCED_PARAMETER( hPrevInstance );
     UNREFERENCED_PARAMETER( lpCmdLine );
 
@@ -117,8 +233,12 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
         }
     }
 
-    CleanupDevice();
+	// Clean up the server thread.
+	if (serverRunning) {
+		gameServer->close();
+	}
 
+    CleanupDevice();
     return ( int )msg.wParam;
 }
 
@@ -492,6 +612,10 @@ HRESULT InitDevice()
 	if (FAILED(hr))
 		return hr;
 
+	hr = D3DX11CreateShaderResourceViewFromFile(g_pd3dDevice, L"other_sprite.png", NULL, NULL, &g_otherSprite, NULL);
+	if (FAILED(hr))
+		return hr;
+
 	// Create the sample state
 	D3D11_SAMPLER_DESC sampDesc;
 	ZeroMemory(&sampDesc, sizeof(sampDesc));
@@ -654,7 +778,7 @@ void OnKeyUp(HWND hwnd, UINT vk, BOOL fDown, int cRepeat, UINT flags)
 		}
 		break;
 	
-default			:
+	default	:
 		break;
 	}
 }
@@ -1124,6 +1248,32 @@ void Render()
 	currentLevel->update(elapsed);
 	player->update(elapsed);
 
+
+
+	// Testing out server connection
+	// ------------------------------------
+	// Position Packet
+	sendMovement test;
+	test.x = currentLevel->levelPosition;
+	test.y = player->rect->y;
+	test.plrId = 10;
+	// Packet Type
+	Packet packetType = P_Movement;
+
+	// Send out packet
+	send(Connection, (char *)&packetType, sizeof(Packet), NULL);
+	send(Connection, (char*)&test, sizeof(test), NULL);
+
+	/*
+	std::wstring testTwo = std::to_wstring(pawns.size());
+	testTwo += L"\n";
+	OutputDebugString(testTwo.c_str());
+	*/
+
+	// ------------------------------------
+	// Testing out server connection
+
+
 	// Setup vertex buffer parameters
 	UINT stride = sizeof(SimpleVertex);
 	UINT offset = 0;
@@ -1135,6 +1285,12 @@ void Render()
 	// Draw the current level
 	currentLevel->draw(VsConstData, g_pImmediateContext, g_pVertexShader, g_pPixelShader,
 		g_pConstantBuffer11, g_Sampler, g_pVertexBuffer2, stride, offset);
+
+	// Draw the other players
+	for (Pawn* pwn : pawns) {
+		pwn->draw(VsConstData, g_pImmediateContext, g_pVertexShader, g_pPixelShader,
+			g_pConstantBuffer11, g_Sampler, g_pVertexBuffer2, stride, offset);
+	}
 
 	// Draw the player
 	player->draw(VsConstData, g_pImmediateContext, g_pVertexShader, g_pPixelShader,

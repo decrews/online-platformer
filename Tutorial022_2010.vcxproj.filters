@@ -25,6 +25,12 @@
     <ClCompile Include="Spike.cpp">
       <Filter>cpp</Filter>
     </ClCompile>
+    <ClCompile Include="Pawn.cpp">
+      <Filter>cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="Server.cpp">
+      <Filter>cpp</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="STRUCTS.h">
@@ -55,6 +61,12 @@
       <Filter>headers</Filter>
     </ClInclude>
     <ClInclude Include="Spike.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Pawn.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Server.h">
       <Filter>headers</Filter>
     </ClInclude>
   </ItemGroup>

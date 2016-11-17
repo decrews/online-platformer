@@ -375,9 +375,11 @@
     <ClCompile Include="Door.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Level.cpp" />
+    <ClCompile Include="Pawn.cpp" />
     <ClCompile Include="Platform.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Rect.cpp" />
+    <ClCompile Include="Server.cpp" />
     <ClCompile Include="source.cpp" />
     <ClCompile Include="Spike.cpp" />
   </ItemGroup>
@@ -389,10 +391,12 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="groundwork.h" />
     <ClInclude Include="Level.h" />
+    <ClInclude Include="Pawn.h" />
     <ClInclude Include="Platform.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Rect.h" />
     <CLInclude Include="resource.h" />
+    <ClInclude Include="Server.h" />
     <ClInclude Include="Spike.h" />
     <ClInclude Include="STRUCTS.h" />
     <ResourceCompile Include="homework2.rc" />
