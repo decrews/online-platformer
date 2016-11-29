@@ -131,6 +131,11 @@ void Player::update(long elapsed_microseconds) {
 				if (block->type == 1) {
 					block->falling = true;
 				}
+
+				if (block->type == 2 && w_down == true)
+				{
+					this->yVel = -dt*20;
+				}
 			}
 
 			// If ground collision did happen (hitGround), then undo the move (-yVel)
@@ -144,7 +149,16 @@ void Player::update(long elapsed_microseconds) {
 			if (wallCheck(block->rect) && !block->falling) {
 				againstWall = true;
 				//OutputDebugStringW(L"Wall collision triggered.\n");
+
+				//push block
+				if (block->type == 2)
+				{
+					block->rect->x = block->rect->x + xVel;
+					block->xPos = block->xPos + this->xVel;
+				}
 			}
+
+			
 
 			if (headCheck(block->rect) && !block->falling) {
 				//OutputDebugStringW(L"Head check triggered.\n");

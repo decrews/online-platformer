@@ -853,9 +853,12 @@ void InitGame() {
 	// The last argument determines block type
 	// 0 = normal block
 	// 1 = falling block (speed constant in Level class)
+	// 2 = pushable blocks
 
 	//center of the universe? (-0.2, -0.6)
-
+	
+	//TEST PUSH BLOCK
+	currentLevel->blocks.push_back(new Platform(0.5, -0.5, 0.05, g_stoneBlockTex, 2));
 
 	//giant wall to the left
 	for (float i = -0.1; i < 1.2; i += 0.1)
@@ -1064,7 +1067,7 @@ void InitGame() {
 	currentLevel->blocks.push_back(new Platform(12.9, -0.1, 0.05, g_ground, 0));
 
 	//bottom spike layer
-	for (float i = 10.5; i <= 20.0; i += 0.1)
+	for (float i = 10.5; i <= 14.0; i += 0.1)
 	{
 		currentLevel->spikes.push_back(new Spike(i, -1.0, 0.05, g_spike, 0));
 	}
@@ -1119,7 +1122,7 @@ void InitGame() {
 	currentLevel->blocks.push_back(new Platform(12.4, -0.9, 0.05, g_ground, 0));
 
 	//lower ground below spikes
-	for (float i = 10.0; i <= 20.0; i += 0.1)
+	for (float i = 10.0; i <= 14.0; i += 0.1)
 	{
 		currentLevel->blocks.push_back(new Platform(i, -1.1, 0.05, g_ground, 0));
 	}
@@ -1129,7 +1132,7 @@ void InitGame() {
 		currentLevel->blocks.push_back(new Platform(i, -0.9, 0.05, g_ground, 0));
 	}
 
-	for (float i = -0.9; i < 0.2; i += 0.1)
+	for (float i = -1.0; i < 0.2; i += 0.1)
 	{
 		currentLevel->blocks.push_back(new Platform(14.0, i, 0.05, g_ground, 0));
 	}
@@ -1225,6 +1228,47 @@ void InitGame() {
 	// Testing spike scaling
 	for (Spike* spk : currentLevel->spikes) {
 		spk->scale = 0.045;
+	}
+
+	for (float i = -1.0; i < 0.2; i += 0.1)
+	{
+		currentLevel->blocks.push_back(new Platform(14.1, i, 0.05, g_ground, 0));
+		currentLevel->blocks.push_back(new Platform(14.2, i, 0.05, g_ground, 0));
+		currentLevel->blocks.push_back(new Platform(14.3, i, 0.05, g_ground, 0));
+		currentLevel->blocks.push_back(new Platform(14.4, i, 0.05, g_ground, 0));
+		currentLevel->blocks.push_back(new Platform(14.5, i, 0.05, g_ground, 0));
+		currentLevel->blocks.push_back(new Platform(14.6, i, 0.05, g_ground, 0));
+		currentLevel->blocks.push_back(new Platform(14.7, i, 0.05, g_ground, 0));
+		currentLevel->blocks.push_back(new Platform(14.8, i, 0.05, g_ground, 0));
+		currentLevel->blocks.push_back(new Platform(14.9, i, 0.05, g_ground, 0));
+		currentLevel->blocks.push_back(new Platform(15.0, i, 0.05, g_ground, 0));
+	}
+
+
+	for (float i = 15.1; i < 20.0; i += 0.1)
+	{
+		currentLevel->blocks.push_back(new Platform(i, -0.9, 0.05, g_stoneBlockTex, 0));
+		currentLevel->blocks.push_back(new Platform(i, -1.0, 0.05, g_ground, 0));
+	}
+
+	for (float i = 20.7; i < 21.0; i += 0.1)
+	{
+		currentLevel->blocks.push_back(new Platform(i, -0.9, 0.05, g_stoneBlockTex, 0));
+		currentLevel->blocks.push_back(new Platform(i, -1.0, 0.05, g_ground, 0));
+	}
+
+	currentLevel->blocks.push_back(new Platform(16.0, -0.8, 0.05, g_stoneBlockTex, 2));
+
+	currentLevel->blocks.push_back(new Platform(20.8, -0.8, 0.05, g_stoneBlockTex, 2));
+
+	for (float i = 21.1; i < 25.0; i += 0.1)
+	{
+		currentLevel->blocks.push_back(new Platform(i, -0.3, 0.05, g_ground, 0));
+	}
+
+	for (float i = -0.1; i <= 1.0; i += 0.1)
+	{
+		currentLevel->blocks.push_back(new Platform(21.5, i, 0.05, g_ground, 0));
 	}
 
 	/*currentLevel->spikes.push_back(new Spike(12.9, -0.2, 0.05, g_spike2, 0));
