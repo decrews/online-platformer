@@ -5,6 +5,7 @@
 #include "Door.h"
 #include "STRUCTS.h"
 #include "Spike.h"
+#include "Spring.h"
 
 class Level
 {
@@ -25,6 +26,7 @@ public:
 	std::vector<Platform*> fallingBlocks;
 	std::vector<Door*> doors;
 	std::vector<Spike*> spikes;
+	//std::vector<Spring*> springs;
 	float levelPosChange = 0;
 	float levelPosition = 0;
 	float offsetX = 0.6;

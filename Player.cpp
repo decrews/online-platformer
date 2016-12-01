@@ -136,6 +136,17 @@ void Player::update(long elapsed_microseconds) {
 				{
 					this->yVel = -dt*20;
 				}
+
+
+				//testing moving platform
+				if (block->type == 3)
+				{
+					onBlock = true;
+					if (onBlock == true) {
+						block->rect->x += 0.01;
+						block->xPos += 0.01;
+					}
+				}
 			}
 
 			// If ground collision did happen (hitGround), then undo the move (-yVel)
@@ -171,7 +182,6 @@ void Player::update(long elapsed_microseconds) {
 				hitGround = false;
 			}
 		}
-		
 	}
 
 	//check point system
@@ -191,6 +201,7 @@ void Player::update(long elapsed_microseconds) {
 	if (hitGround == true) {
 		rect->y += 0.004;
 	}
+
 
 	// If the player is not against the wall, move the platforms
 	// and save this "move" in xVelPrev in case we have to move 

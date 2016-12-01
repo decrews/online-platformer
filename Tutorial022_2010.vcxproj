@@ -382,6 +382,7 @@
     <ClCompile Include="Server.cpp" />
     <ClCompile Include="source.cpp" />
     <ClCompile Include="Spike.cpp" />
+    <ClCompile Include="Spring.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="shader.fx" />
@@ -398,6 +399,7 @@
     <CLInclude Include="resource.h" />
     <ClInclude Include="Server.h" />
     <ClInclude Include="Spike.h" />
+    <ClInclude Include="Spring.h" />
     <ClInclude Include="STRUCTS.h" />
     <ResourceCompile Include="homework2.rc" />
   </ItemGroup>

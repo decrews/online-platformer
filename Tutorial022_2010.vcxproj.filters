@@ -31,6 +31,9 @@
     <ClCompile Include="Server.cpp">
       <Filter>cpp</Filter>
     </ClCompile>
+    <ClCompile Include="Spring.cpp">
+      <Filter>cpp</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="STRUCTS.h">
@@ -67,6 +70,9 @@
       <Filter>headers</Filter>
     </ClInclude>
     <ClInclude Include="Server.h">
+      <Filter>headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Spring.h">
       <Filter>headers</Filter>
     </ClInclude>
   </ItemGroup>

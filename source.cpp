@@ -12,6 +12,7 @@
 #include "Level.h"
 #include "Platform.h"
 #include "STRUCTS.h"
+#include "Spring.h"
 
 //--------------------------------------------------------------------------------------
 // Structures
@@ -860,6 +861,8 @@ void InitGame() {
 	//TEST PUSH BLOCK
 	currentLevel->blocks.push_back(new Platform(0.5, -0.5, 0.05, g_stoneBlockTex, 2));
 
+	currentLevel->blocks.push_back(new Platform(0.5, -0.3, 0.05, g_stoneBlockTex, 3));
+
 	//giant wall to the left
 	for (float i = -0.1; i < 1.2; i += 0.1)
 	{
@@ -1257,19 +1260,111 @@ void InitGame() {
 		currentLevel->blocks.push_back(new Platform(i, -1.0, 0.05, g_ground, 0));
 	}
 
+	for (float i = 26.0; i < 28.0; i += 0.1)
+	{
+		currentLevel->blocks.push_back(new Platform(i, -0.9, 0.05, g_stoneBlockTex, 0));
+	}
+
+	currentLevel->blocks.push_back(new Platform(21.4, -0.9, 0.05, g_stoneBlockTex, 3));
+
+	currentLevel->blocks.push_back(new Platform(22.0, -0.8, 0.05, g_stoneBlockTex, 0));
+	currentLevel->spikes.push_back(new Spike(22.0, -0.71, 0.05, g_spike, 0));
+	currentLevel->spikes.push_back(new Spike(21.91, -0.8, 0.05, g_spike2, 0));
+	currentLevel->spikes.push_back(new Spike(22.09, -0.8, 0.05, g_spike3, 0));
+
+	currentLevel->blocks.push_back(new Platform(22.2, -0.9, 0.05, g_stoneBlockTex, 3));
+
+	currentLevel->blocks.push_back(new Platform(23.0, -0.8, 0.05, g_stoneBlockTex, 0));
+	currentLevel->spikes.push_back(new Spike(23.0, -0.71, 0.05, g_spike, 0));
+	currentLevel->spikes.push_back(new Spike(22.91, -0.8, 0.05, g_spike2, 0));
+	currentLevel->spikes.push_back(new Spike(23.09, -0.8, 0.05, g_spike3, 0));
+
+	currentLevel->blocks.push_back(new Platform(23.2, -0.9, 0.05, g_stoneBlockTex, 3));
+
+	for (float i = 21.4; i < 26.0; i += 0.1)
+	{
+		currentLevel->spikes.push_back(new Spike(i, -1.0, 0.05, g_spike, 0));
+	}
+
 	currentLevel->blocks.push_back(new Platform(16.0, -0.8, 0.05, g_stoneBlockTex, 2));
 
 	currentLevel->blocks.push_back(new Platform(20.8, -0.8, 0.05, g_stoneBlockTex, 2));
 
-	for (float i = 21.1; i < 25.0; i += 0.1)
+	for (float i = 21.1; i < 26.0; i += 0.1)
 	{
 		currentLevel->blocks.push_back(new Platform(i, -0.3, 0.05, g_ground, 0));
 	}
 
-	for (float i = -0.1; i <= 1.0; i += 0.1)
+	// i is -0.1 for shorter guy
+	for (float i = 0.0; i <= 1.1; i += 0.1)
 	{
 		currentLevel->blocks.push_back(new Platform(21.5, i, 0.05, g_ground, 0));
 	}
+
+	for (float i = 21.6; i < 22.7; i += 0.1)
+	{
+		currentLevel->blocks.push_back(new Platform(i, 0.0, 0.05, g_ground, 0));
+	}
+
+	for (float i = 21.9; i < 23.0; i += 0.1)
+	{
+		currentLevel->blocks.push_back(new Platform(i, 0.3, 0.05, g_ground, 0));
+	}
+
+	for (float i = 21.6; i < 22.7; i += 0.1)
+	{
+		currentLevel->blocks.push_back(new Platform(i, 0.6, 0.05, g_ground, 0));
+	}
+
+	for (float i = -0.2; i < 0.3; i += 0.1)
+	{
+		currentLevel->spikes.push_back(new Spike(22.91, i, 0.05, g_spike2, 0));
+	}
+
+	for (float i = 0.1; i < 0.6; i += 0.1)
+	{
+		currentLevel->spikes.push_back(new Spike(21.59, i, 0.05, g_spike3, 0));
+	}
+
+	for (float i = 0.4; i < 0.8; i += 0.1)
+	{
+		currentLevel->spikes.push_back(new Spike(22.91, i, 0.05, g_spike2, 0));
+	}
+
+	for (float i = -0.2; i <= 0.8; i += 0.1)
+	{
+		currentLevel->blocks.push_back(new Platform(23.0, i, 0.05, g_ground, 0));
+	}
+
+	currentLevel->blocks.push_back(new Platform(23.5, -0.2, 0.05, g_stoneBlockTex, 2));
+
+	for (float i = -0.2; i < 0.4; i += 0.1)
+	{
+		currentLevel->blocks.push_back(new Platform(24.0, i, 0.05, g_ground, 0));
+	}
+
+	for (float i = -0.2; i < 0.4; i += 0.1)
+	{
+		currentLevel->spikes.push_back(new Spike(23.91, i, 0.05, g_spike2, 0));
+		currentLevel->spikes.push_back(new Spike(24.09, i, 0.05, g_spike3, 0));
+	}
+
+	for (float i = 24.2; i < 25.9; i += 0.1)
+	{
+		currentLevel->spikes.push_back(new Spike(i, -0.2, 0.05, g_spike, 0));
+		currentLevel->blocks.push_back(new Platform(i, 0.1, 0.05, g_ground, 1));
+	}
+
+	currentLevel->blocks.push_back(new Platform(25.9, -0.2, 0.05, g_ground, 0));
+
+	currentLevel->blocks.push_back(new Platform(25.8, 0.2, 0.05, g_stoneBlockTex, 2));
+
+	for (float i = -0.3; i <= 0.9; i += 0.1)
+	{
+		currentLevel->blocks.push_back(new Platform(26.0, i, 0.05, g_ground, 0));
+	}
+
+	currentLevel->doors.push_back(new Door(27.0, -0.8, 0.09, g_checkPoint));
 
 	/*currentLevel->spikes.push_back(new Spike(12.9, -0.2, 0.05, g_spike2, 0));
 	currentLevel->spikes.push_back(new Spike(12.9, -0.2, 0.05, g_spike2, 0));*/

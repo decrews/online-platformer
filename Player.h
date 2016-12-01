@@ -10,6 +10,10 @@ public:
 	bool groundCheck(Rect* rect);
 	bool headCheck(Rect* rect);
 	bool wallCheck(Rect* rect);
+	
+	//testing moving platform
+	bool onBlock = false;
+
 	bool alive = true;
 	void movePlayer(float x, float y);
 	void update(long elapsed_microseconds);
