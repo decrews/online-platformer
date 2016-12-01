@@ -82,16 +82,17 @@ void Player::update(long elapsed_microseconds) {
 
 	if (a_down) {
 		xVel = -speed;
-		currentFrameRow = 1;
+		currentFrameColumn = 0;
 		animationActive = true;
 	}
 	else if (d_down) {
 		xVel = speed;
-		currentFrameRow = 2;
+		currentFrameColumn = 1;
 		animationActive = true;
 	}
 	else {
 		currentFrameColumn = 2;
+		currentFrameRow = 1;
 		animationActive = false;
 		xVel = 0;
 	}
@@ -134,7 +135,7 @@ void Player::update(long elapsed_microseconds) {
 
 				if (block->type == 2 && w_down == true)
 				{
-					this->yVel = -dt*20;
+					this->yVel = -dt*5;				// Change this to adjust for the spring boards!
 				}
 
 

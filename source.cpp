@@ -270,7 +270,7 @@ HRESULT InitWindow( HINSTANCE hInstance, int nCmdShow )
     g_hInst = hInstance;
     RECT rc = { 0, 0, screenWidth, screenHeight };
     AdjustWindowRect( &rc, WS_OVERLAPPEDWINDOW, FALSE );
-    g_hWnd = CreateWindow( L"TutorialWindowClass", L"Homework 3",
+    g_hWnd = CreateWindow( L"TutorialWindowClass", L"Run Santa, Run!",
                            WS_OVERLAPPEDWINDOW,
                            CW_USEDEFAULT, CW_USEDEFAULT, rc.right - rc.left, rc.bottom - rc.top, NULL, NULL, hInstance,
                            NULL );
@@ -553,11 +553,11 @@ HRESULT InitDevice()
 	if (FAILED(hr))
 		return hr;
 
-	hr = D3DX11CreateShaderResourceViewFromFile(g_pd3dDevice, L"player.png", NULL, NULL, &g_playerTex, NULL);
+	hr = D3DX11CreateShaderResourceViewFromFile(g_pd3dDevice, L"HikerClause.png", NULL, NULL, &g_playerTex, NULL);
 	if (FAILED(hr))
 		return hr;
 	
-	hr = D3DX11CreateShaderResourceViewFromFile(g_pd3dDevice, L"bg0.png", NULL, NULL, &g_bgTex, NULL);
+	hr = D3DX11CreateShaderResourceViewFromFile(g_pd3dDevice, L"background2.png", NULL, NULL, &g_bgTex, NULL);
 	if (FAILED(hr))
 		return hr;
 
@@ -577,7 +577,7 @@ HRESULT InitDevice()
 	if (FAILED(hr))
 		return hr;
 
-	hr = D3DX11CreateShaderResourceViewFromFile(g_pd3dDevice, L"groundtest.png", NULL, NULL, &g_ground, NULL);
+	hr = D3DX11CreateShaderResourceViewFromFile(g_pd3dDevice, L"ground.png", NULL, NULL, &g_ground, NULL);
 	if (FAILED(hr))
 		return hr;
 

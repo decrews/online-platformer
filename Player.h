@@ -34,10 +34,10 @@ public:
 
 	// Animation variables
 	bool animationActive = false;
-	float spriteSheetHeight = 192;
-	float spriteHeight = 48;
-	float spriteSheetWidth = 128;
-	float spriteWidth = 32;
+	float spriteSheetHeight = 264;
+	float spriteHeight = spriteSheetHeight / 4;
+	float spriteSheetWidth = 214;
+	float spriteWidth = spriteSheetWidth / 3;
 	float totalSpriteColumns = (spriteSheetWidth / spriteWidth);
 	float totalSpriteRows = (spriteSheetHeight / spriteHeight);
 	float adjustedHeight = 1 / totalSpriteRows;

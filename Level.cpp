@@ -24,8 +24,8 @@ void Level::draw(VS_CONSTANT_BUFFER* cbuffer, ID3D11DeviceContext* gcontext,
 	cbuffer->y = 0;
 
 	// Scale
-	cbuffer->scaleX = 2;
-	cbuffer->scaleY = 2;
+	cbuffer->scaleX = 1.4;
+	cbuffer->scaleY = 1;
 
 	// Setting constants, pixel, and vertex shader.
 	gcontext->UpdateSubresource(constBuffer, 0, 0, cbuffer, 0, 0);
@@ -41,6 +41,40 @@ void Level::draw(VS_CONSTANT_BUFFER* cbuffer, ID3D11DeviceContext* gcontext,
 	// Set vertex buffer and Draw
 	gcontext->IASetVertexBuffers(0, 1, &vb, &stride, &offset);
 	gcontext->Draw(6, 0);
+
+
+
+	// Constant buffer data for background
+	cbuffer->currentFrameColumn = 0;
+	cbuffer->adjustedWidth = 0;
+	cbuffer->currentFrameRow = 0;
+	cbuffer->adjustedHeight = 0;
+
+	// Constant buffer variables for movement
+	cbuffer->x = bgPos+2.8;
+	cbuffer->y = 0;
+
+	// Scale
+	cbuffer->scaleX = 1.4;
+	cbuffer->scaleY = 1;
+
+	// Setting constants, pixel, and vertex shader.
+	gcontext->UpdateSubresource(constBuffer, 0, 0, cbuffer, 0, 0);
+	gcontext->VSSetConstantBuffers(0, 1, &constBuffer);
+	gcontext->PSSetConstantBuffers(0, 1, &constBuffer);
+
+	// Render the background
+	gcontext->PSSetSamplers(0, 1, &sampler);
+	gcontext->PSSetShaderResources(0, 1, &bgTex);
+	gcontext->VSSetShader(vs, NULL, 0);
+	gcontext->PSSetShader(ps, NULL, 0);
+
+	// Set vertex buffer and Draw
+	gcontext->IASetVertexBuffers(0, 1, &vb, &stride, &offset);
+	gcontext->Draw(6, 0);
+
+
+
 	
 
 	for (auto curPlatform : blocks) {
