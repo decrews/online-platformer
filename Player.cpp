@@ -135,8 +135,11 @@ void Player::update(long elapsed_microseconds) {
 
 				if (block->type == 2 && w_down == true)
 				{
-					this->yVel = -dt*5;				// Change this to adjust for the spring boards!
+					this->yVel = -dt * 0.3;				// Change this to adjust for the spring boards!
+					this->jumpHeight = 0.03;
 				}
+				else
+					this->jumpHeight = 0.018;
 
 
 				//testing moving platform
