@@ -13,6 +13,7 @@
 #include "Platform.h"
 #include "STRUCTS.h"
 #include "Spring.h"
+#include <fstream>		//  i(f)stream, o(f)stream
 
 //--------------------------------------------------------------------------------------
 // Structures
@@ -169,6 +170,23 @@ void ClientThread() {
 //--------------------------------------------------------------------------------------
 int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nCmdShow )
 {
+	
+	// Read info about client/server from file
+	ifstream file("serverInfo.txt");     //  Aktuell fil åpnes.
+	char letter, buffer[20];
+
+	if (file) {                          //  Filen finnes:
+		file >> letter; file.ignore();
+		file.getline(buffer, 20);      //  Prøver å lese 1.felt i post.
+
+		Ip = buffer;
+
+		if (letter == 'C')
+			serverRunning = false;
+		else
+			serverRunning = true;
+	}
+
 	if (serverRunning) {
 		gameServer = new Server(1111, broadcastServer);
 		gameServer->start();
