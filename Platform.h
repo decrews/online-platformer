@@ -5,9 +5,10 @@
 class Platform
 {
 public:
-	Platform(float x, float y, float s, ID3D11ShaderResourceView* t, int type);
+	Platform(float x, float y, float s, ID3D11ShaderResourceView* t, int type, int id);
 	~Platform();
 
+	int id;
 	bool falling = false;
 	float fallingSpeed = 0.00005;
 	int type;

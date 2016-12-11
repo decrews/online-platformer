@@ -115,9 +115,9 @@ void Player::update(long elapsed_microseconds) {
 	againstWall = false;
 	hitGround = false;
 
-	std::wstring test = std::to_wstring(dt);
-	test += L"\n";
-	OutputDebugString(test.c_str());
+	//std::wstring test = std::to_wstring(dt);
+	//test += L"\n";
+	//OutputDebugString(test.c_str());
 
 	for (Platform* block : currentLevel->blocks) {
 		if (block->rect->x > -0.2 && block->rect->x < 0.2) {
@@ -271,8 +271,8 @@ void Player::draw(VS_CONSTANT_BUFFER* cbuffer, ID3D11DeviceContext* gcontext,
 	cbuffer->y = this->rect->y;
 
 	// Scale
-	cbuffer->scaleX = 1;
-	cbuffer->scaleY = 1;
+	cbuffer->scaleX = 1.5;
+	cbuffer->scaleY = 1.2;
 
 	// Setting constants, pixel, and vertex shader.
 	gcontext->UpdateSubresource(constBuffer, 0, 0, cbuffer, 0, 0);

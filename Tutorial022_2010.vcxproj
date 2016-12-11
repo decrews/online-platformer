@@ -374,6 +374,7 @@
   <ItemGroup />
   <ItemGroup>
     <ClCompile Include="Door.cpp" />
+    <ClCompile Include="Font.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Level.cpp" />
     <ClCompile Include="Pawn.cpp" />
@@ -390,6 +391,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Door.h" />
+    <ClInclude Include="Font.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="groundwork.h" />
     <ClInclude Include="Level.h" />
