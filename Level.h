@@ -6,6 +6,7 @@
 #include "STRUCTS.h"
 #include "Spike.h"
 #include "Spring.h"
+#include <string>
 
 class Level
 {
@@ -32,5 +33,11 @@ public:
 	float offsetX = 0.6;
 	float worldPos = 0;
 	float gravity = 0.0005;
+
+	float totalTime = 0;
+	bool raceStart = false;
+	bool raceFinish = false;
+	ID3D11ShaderResourceView* titleTex; // Title Texture
+
 };
 

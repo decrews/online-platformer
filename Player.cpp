@@ -114,6 +114,8 @@ void Player::update(long elapsed_microseconds) {
 	grounded = false;
 	againstWall = false;
 	hitGround = false;
+	bool fallingGround = false;
+	onBlock = false;
 
 	//std::wstring test = std::to_wstring(dt);
 	//test += L"\n";
@@ -124,6 +126,20 @@ void Player::update(long elapsed_microseconds) {
 			// Checks to see if there is a collision with the ground.
 			if (groundCheck(block->rect)) {
 
+				
+				// Starting flag
+				if (block->type == 5) {
+					currentLevel->raceStart = true;
+					continue;
+				}
+				
+				// Finish flag
+				if (block->type == 4) {
+					currentLevel->raceStart = false;
+					currentLevel->raceFinish = true;
+					continue;
+				}
+
 				//OutputDebugStringW(L"Ground collision triggered.\n");
 				hitGround = true;
 				grounded = true;
@@ -131,6 +147,10 @@ void Player::update(long elapsed_microseconds) {
 				// If the block is a falling block (type 1), set the falling flag.
 				if (block->type == 1) {
 					block->falling = true;
+					fallingGround = true;
+				}
+				else {
+					fallingGround = false;
 				}
 
 				if (block->type == 2 && w_down == true)
@@ -203,7 +223,12 @@ void Player::update(long elapsed_microseconds) {
 
 	// Smooth out walking on falling blocks.
 	if (hitGround == true) {
-		rect->y += 0.004;
+		if (fallingGround == true) {
+			rect->y += 0.004; // Needs extra bounce to get over falling blocks
+		}
+		else {
+			rect->y += 0.0005;
+		}
 	}
 
 
@@ -227,7 +252,7 @@ void Player::update(long elapsed_microseconds) {
 
 	if (this->rect->y <= -1.5) {
 		// Reset player's position on the screen
-		this->rect->x = this->initialX;
+		this->rect->x = 0;//this->initialX;
 		this->rect->y = this->initialY;
 
 		// Move the player back to his original position (-levelPosition) and then add checkpoint (+offset):
@@ -245,11 +270,17 @@ void Player::update(long elapsed_microseconds) {
 			this->rect->y = this->initialY;
 			yVel = 0;
 			xVel = 0;
+			this->rect->x = 0;
 
 			// Move the player back to his original position (-levelPosition) and then add checkpoint (+offset):
 			currentLevel->levelPosChange = -currentLevel->levelPosition + currentLevel->offsetX;
 			OutputDebugStringW(L"Ouch!.\n");
 		}
+	}
+
+	// Move add the movement of the block you're standing on to levelPosChange
+	if (onBlock) {
+		currentLevel->levelPosChange += 0.01;
 	}
 }
 
@@ -271,7 +302,7 @@ void Player::draw(VS_CONSTANT_BUFFER* cbuffer, ID3D11DeviceContext* gcontext,
 	cbuffer->y = this->rect->y;
 
 	// Scale
-	cbuffer->scaleX = 1.5;
+	cbuffer->scaleX = 1.6;
 	cbuffer->scaleY = 1.2;
 
 	// Setting constants, pixel, and vertex shader.

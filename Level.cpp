@@ -217,6 +217,12 @@ void Level::update(long elapsed_microseconds) {
 	// levelPosChange - The amount of change from this frame.
 	levelPosition += levelPosChange;
 
+	if (raceStart) {
+		totalTime += dt / 100;
+		std::wstring testTwo = std::to_wstring(totalTime);
+		testTwo += L" time passed.\n";
+		OutputDebugString(testTwo.c_str());
+	}
 }
 
 

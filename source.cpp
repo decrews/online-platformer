@@ -14,6 +14,7 @@
 #include "STRUCTS.h"
 #include "Spring.h"
 #include <fstream>		//  i(f)stream, o(f)stream
+#include "Font.h" 
 
 //--------------------------------------------------------------------------------------
 // Structures
@@ -61,11 +62,14 @@ ID3D11ShaderResourceView*           g_corner = NULL;
 ID3D11ShaderResourceView*           g_corner2 = NULL;
 ID3D11ShaderResourceView*           g_checkPoint = NULL;
 ID3D11ShaderResourceView*           g_endPoint = NULL;
+ID3D11ShaderResourceView*			g_startPoint = NULL;
 ID3D11ShaderResourceView*           g_spike = NULL;
 ID3D11ShaderResourceView*           g_spike2 = NULL;
 ID3D11ShaderResourceView*           g_spike3 = NULL;
 ID3D11ShaderResourceView*           g_spike4 = NULL;
+ID3D11ShaderResourceView*           g_giftBlock = NULL;
 ID3D11ShaderResourceView*           g_otherSprite = NULL;
+ID3D11ShaderResourceView*           g_titleScreen = NULL;
 
 ID3D11SamplerState*                 g_Sampler = NULL;
 ID3D11BlendState*					g_BlendState;
@@ -86,12 +90,16 @@ Server* gameServer = NULL;
 int screenWidth = 600;
 int screenHeight = 600;
 float screenRatio = screenWidth/screenHeight;
+bool titleScreen = true; // Check to see if the title screen is up.
 
 Game* game = new Game();
 Level* currentLevel = new Level();
 //Level* test = new Level();
 Player* player = new Player(currentLevel);
 std::vector<Pawn*> pawns;
+
+Font timeText;
+Font endText;
 
 
 //--------------------------------------------------------------------------------------
@@ -612,6 +620,10 @@ HRESULT InitDevice()
 	if (FAILED(hr))
 		return hr;
 
+	hr = D3DX11CreateShaderResourceViewFromFile(g_pd3dDevice, L"StartFlag.png", NULL, NULL, &g_startPoint, NULL);
+	if (FAILED(hr))
+		return hr;
+
 	hr = D3DX11CreateShaderResourceViewFromFile(g_pd3dDevice, L"Spike.png", NULL, NULL, &g_spike, NULL);
 	if (FAILED(hr))
 		return hr;
@@ -628,7 +640,15 @@ HRESULT InitDevice()
 	if (FAILED(hr))
 		return hr;
 
-	hr = D3DX11CreateShaderResourceViewFromFile(g_pd3dDevice, L"other_sprite.png", NULL, NULL, &g_otherSprite, NULL);
+	hr = D3DX11CreateShaderResourceViewFromFile(g_pd3dDevice, L"gift.png", NULL, NULL, &g_giftBlock, NULL);
+	if (FAILED(hr))
+		return hr;
+
+	hr = D3DX11CreateShaderResourceViewFromFile(g_pd3dDevice, L"other_clause.png", NULL, NULL, &g_otherSprite, NULL);
+	if (FAILED(hr))
+		return hr;
+
+	hr = D3DX11CreateShaderResourceViewFromFile(g_pd3dDevice, L"titleScreen.png", NULL, NULL, &g_titleScreen, NULL);
 	if (FAILED(hr))
 		return hr;
 
@@ -665,7 +685,22 @@ HRESULT InitDevice()
 	UINT sampleMask = 0xffffffff;
 	g_pImmediateContext->OMSetBlendState(g_BlendState, blendFactor, sampleMask);
 
-	
+	// Font stuff
+	timeText.init(g_pd3dDevice, g_pImmediateContext, timeText.defaultFontMapDesc);
+	timeText.setColor(XMFLOAT3(0, 0, 0));
+	timeText.setWindowSize(600, 600);
+	timeText.setScaling(XMFLOAT3(5, 3, 2));
+	timeText.setPosition(XMFLOAT3(-0.3, -0.5, 0));
+	timeText.setKerning(0.05);
+
+	// Font stuff
+	endText.init(g_pd3dDevice, g_pImmediateContext, endText.defaultFontMapDesc);
+	endText.setColor(XMFLOAT3(0, 0, 0));
+	endText.setWindowSize(600, 600);
+	endText.setScaling(XMFLOAT3(5, 3, 2));
+	endText.setPosition(XMFLOAT3(-0.3, -0.3, 0));
+	endText.setKerning(0.05);
+
 	// Setup Player, Level, etc
 	InitGame();
 
@@ -784,6 +819,7 @@ void OnKeyUp(HWND hwnd, UINT vk, BOOL fDown, int cRepeat, UINT flags)
 		break;
 	case 32: //space
 		player->w_down = false;
+		titleScreen = false;
 		break;
 	case 75: //k
 		if (VsConstData->extra == 0) {
@@ -863,6 +899,7 @@ void InitGame() {
 	player->tex = g_playerTex;
 	currentLevel->bgTex = g_bgTex;
 	currentLevel->levelPosChange = -0.6;
+	currentLevel->titleTex = g_titleScreen;
 
 	int idCounter = 0;
 
@@ -873,7 +910,7 @@ void InitGame() {
 	// 2 = pushable blocks
 
 	//center of the universe? (-0.2, -0.6)
-	
+
 	//giant wall to the left
 	for (float i = -0.1; i < 1.2; i += 0.1)
 	{
@@ -1312,9 +1349,9 @@ void InitGame() {
 		currentLevel->spikes.push_back(new Spike(i, -1.0, 0.05, g_spike, 0));
 	}
 
-	currentLevel->blocks.push_back(new Platform(16.0, -0.8, 0.05, g_stoneBlockTex, 2, ++idCounter));
+	currentLevel->blocks.push_back(new Platform(16.0, -0.8, 0.05, g_giftBlock, 2, ++idCounter));
 
-	currentLevel->blocks.push_back(new Platform(20.8, -0.8, 0.05, g_stoneBlockTex, 2, ++idCounter));
+	currentLevel->blocks.push_back(new Platform(20.8, -0.8, 0.05, g_giftBlock, 2, ++idCounter));
 
 	for (float i = 21.1; i < 26.0; i += 0.1)
 	{
@@ -1362,7 +1399,7 @@ void InitGame() {
 		currentLevel->blocks.push_back(new Platform(23.0, i, 0.05, g_ground, 0, ++idCounter));
 	}
 
-	currentLevel->blocks.push_back(new Platform(23.5, -0.2, 0.05, g_stoneBlockTex, 2, ++idCounter));
+	currentLevel->blocks.push_back(new Platform(23.5, -0.2, 0.05, g_giftBlock, 2, ++idCounter));
 
 	for (float i = -0.2; i < 0.4; i += 0.1)
 	{
@@ -1383,7 +1420,7 @@ void InitGame() {
 
 	currentLevel->blocks.push_back(new Platform(25.9, -0.2, 0.05, g_ground, 0, ++idCounter));
 
-	currentLevel->blocks.push_back(new Platform(25.8, 0.2, 0.05, g_stoneBlockTex, 2, ++idCounter));
+	currentLevel->blocks.push_back(new Platform(25.8, 0.2, 0.05, g_giftBlock, 2, ++idCounter));
 
 	for (float i = -0.3; i <= 0.9; i += 0.1)
 	{
@@ -1540,7 +1577,14 @@ void InitGame() {
 		currentLevel->blocks.push_back(new Platform(32.1, i, 0.05, g_ground, 0, ++idCounter));
 	}
 
-	currentLevel->doors.push_back(new Door(31.0, 0.6, 0.09, g_checkPoint));
+	// End flag
+	currentLevel->blocks.push_back(new Platform(31.0, 0.75, 0.2, g_endPoint, 4, ++idCounter));
+
+	// Beginning flag
+	currentLevel->blocks.push_back(new Platform(0.4, -0.36, 0.2, g_startPoint, 5, ++idCounter));
+
+	// Moves the player to the end
+	//currentLevel->levelPosChange = 29;
 
 	/*currentLevel->spikes.push_back(new Spike(12.9, -0.2, 0.05, g_spike2, 0));
 	currentLevel->spikes.push_back(new Spike(12.9, -0.2, 0.05, g_spike2, 0));*/
@@ -1560,9 +1604,10 @@ void Render()
 	long elapsed = stopwatch.elapse_micro();
 	stopwatch.start(); //restart
 
-	currentLevel->update(elapsed);
-	player->update(elapsed);
-
+	if (currentLevel->raceFinish == false) {
+		currentLevel->update(elapsed);
+		player->update(elapsed);
+	}
 
 
 	// Testing out server connection
@@ -1597,21 +1642,58 @@ void Render()
 	float ClearColor[4] = { 0.0f, 0.125f, 0.3f, 1.0f }; // red,green,blue,alpha
 	g_pImmediateContext->ClearRenderTargetView(g_pRenderTargetView, ClearColor);
 
-	// Draw the current level
-	currentLevel->draw(VsConstData, g_pImmediateContext, g_pVertexShader, g_pPixelShader,
-		g_pConstantBuffer11, g_Sampler, g_pVertexBuffer2, stride, offset);
+	// Drawing the title screen
+	if (titleScreen) {
+		VsConstData->currentFrameColumn = 0;
+		VsConstData->adjustedWidth = 0;
+		VsConstData->currentFrameRow = 0;
+		VsConstData->adjustedHeight = 0;
 
-	// Draw the other players
-	for (Pawn* pwn : pawns) {
-		pwn->draw(VsConstData, g_pImmediateContext, g_pVertexShader, g_pPixelShader,
+		// Constant buffer data for movement
+		VsConstData->x = 0;
+		VsConstData->y = 0;
+
+		// Scale
+		VsConstData->scaleX = 1;
+		VsConstData->scaleY = 1;
+
+		// Setting constants, pixel, and vertex shader.
+		g_pImmediateContext->UpdateSubresource(g_pConstantBuffer11, 0, 0, VsConstData, 0, 0);
+		g_pImmediateContext->VSSetConstantBuffers(0, 1, &g_pConstantBuffer11);
+		g_pImmediateContext->PSSetConstantBuffers(0, 1, &g_pConstantBuffer11);
+
+		// Render the background
+		g_pImmediateContext->PSSetSamplers(0, 1, &g_Sampler);
+		g_pImmediateContext->PSSetShaderResources(0, 1, &currentLevel->titleTex);
+		g_pImmediateContext->VSSetShader(g_pVertexShader, NULL, 0);
+		g_pImmediateContext->PSSetShader(g_pPixelShader, NULL, 0);
+
+		// Set vertex buffer and Draw
+		g_pImmediateContext->IASetVertexBuffers(0, 1, &g_pVertexBuffer2, &stride, &offset);
+		g_pImmediateContext->Draw(6, 0);
+	}
+	else {
+		// Draw the current level
+		currentLevel->draw(VsConstData, g_pImmediateContext, g_pVertexShader, g_pPixelShader,
 			g_pConstantBuffer11, g_Sampler, g_pVertexBuffer2, stride, offset);
+
+		// Draw the other players
+		for (Pawn* pwn : pawns) {
+			pwn->draw(VsConstData, g_pImmediateContext, g_pVertexShader, g_pPixelShader,
+				g_pConstantBuffer11, g_Sampler, g_pVertexBuffer2, stride, offset);
+		}
+
+		// Draw the player
+		player->draw(VsConstData, g_pImmediateContext, g_pVertexShader, g_pPixelShader,
+			g_pConstantBuffer11, g_Sampler, g_pVertexBuffer, stride, offset);
+
+		if (currentLevel->raceFinish) {
+			string time = std::to_string(currentLevel->totalTime);
+			timeText.printf(time);
+			endText.printf("You win!");
+		}
 	}
 
-	// Draw the player
-	player->draw(VsConstData, g_pImmediateContext, g_pVertexShader, g_pPixelShader,
-		g_pConstantBuffer11, g_Sampler, g_pVertexBuffer, stride, offset);
-
 	// Present the information rendered to the back buffer to the front buffer (the screen)
-    g_pSwapChain->Present( 0, 0 );
-
+	g_pSwapChain->Present(0, 0);
 }
